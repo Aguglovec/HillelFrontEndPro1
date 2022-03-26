@@ -18,17 +18,17 @@ switch (operation) {
 
 // + Addition
     case '+':
-    alert(`The result is : ${a+b}`);        
+    alert(`The result is : ${a} + ${b} = ${a+b}`);        
     break;
 
 // - Subtraction   
     case '-':
-    alert(`The result is : ${a-b}`);
+    alert(`The result is : ${a} - ${b} = ${a-b}`);
     break;
 
 // * Multiplication   
     case '*':
-    alert(`The result is : ${a*b}`);
+    alert(`The result is : ${a} * ${b} = ${a*b}`);
     break;
 
 // / Division
@@ -37,9 +37,10 @@ switch (operation) {
         alert('It is forbidden to divide by 0! Enter any other number except 0.');
         b = getNumber('second operand');
     }
-    alert(`The result is : ${a/b}`);
+    alert(`The result is : ${a} / ${b} = ${a/b}`);
     break;
 
+// Wrong operation
     default:
     alert(`Something went wrong`);
     break;
