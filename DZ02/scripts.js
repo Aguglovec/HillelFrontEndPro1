@@ -42,6 +42,6 @@ switch (operation) {
 
 // Wrong operation
     default:
-    alert(`Something went wrong`);
+    alert(`Something went wrong. Reload the page.`);
     break;
 }
