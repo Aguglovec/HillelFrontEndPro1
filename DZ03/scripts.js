@@ -1,6 +1,6 @@
 function getNumber(operandName) {
     let number = prompt(`Please enter a ${operandName}`);
-    while (isNaN(number) === true || (number === '')) {
+    while ((isNaN(number) === true) || (number === '')) {
         number = prompt(`Please enter a valid ${operandName}, only 0, 1, 2, 3, 4, 5, 6, 7, 8, 9  allowed`);
     }
     return +number
