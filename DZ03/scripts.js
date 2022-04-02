@@ -8,7 +8,7 @@ function getNumber(operandName) {
 
 function getOperator(operatorName) {
     let operatorEntered = prompt(`Hello! Please enter an ${operatorName}, available options: + - * /`);
-    while (operatorEntered !== ('+' || '-' || '*' || '/')) {
+    while (operatorEntered !== '+' && operatorEntered !== '-' && operatorEntered !== '*' && operatorEntered !== '/') {
         operatorEntered = prompt(`Please enter a valid ${operatorName}, only  + - * /  allowed`);
     }
     return operatorEntered
