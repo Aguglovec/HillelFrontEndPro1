@@ -25,6 +25,7 @@ function getNumberArr() {
     return stringArr.split (',');
 }
 
+//Сделал проверку на то, что пользователь таки ввёл массив чисел, а не что попало.
 function isNotArrayOfNumbers(string) {
     const numbersToCheck = string.split (',');
     for  (i=0; i<numbersToCheck.length; i++) {
@@ -66,4 +67,3 @@ function getResult(op,arr) {
 //     }
 //     return res;
 // }
-
