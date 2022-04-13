@@ -2,20 +2,24 @@
 
 let createCalculator = function(val) {
     return { 
-        sum(b) {
-            return val += b;
+        sum(...rest) {
+            val =  rest.reduce ((acc,val1) => {return acc+=val1}, val);
+            return val
         },
         
-        sub(b) {
-            return val -= b;
+        sub(...rest) {
+            val =  rest.reduce ((acc,val1) => {return acc-=val1}, val);
+            return val
         },
         
-        mult(b) {
-            return val *= b;
+        mult(...rest) {
+            val = rest.reduce ((acc,val1) => {return acc*=val1}, val);
+            return val
         },
         
-        div(b) {
-            return val /= b;
+        div(...rest) {
+            val =  rest.reduce ((acc,val1) => {return acc/=val1}, val);
+            return val
         },
         
         set(b) {
