@@ -8,7 +8,7 @@ const students = [
     },
     {
         id:11,
-        name: 'John Doe',
+        name: 'Corbin Dallas',
         marks: [ 9, 8, 7, 6, 7 ]
     },
     {
