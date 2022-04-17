@@ -35,17 +35,37 @@ function showResult(result) {
 }
 
 function isValid () {
-    // Сделал общий обработчик чтобы не возникал глюк, когда стиралась ошибка при вводе правильного операнда после неправильного 
-    if (isNaN(operand1Input.value) || isNaN(operand2Input.value))  {
-        errorMsgEl.textContent = 'Wrond character is entered. Only 0,1,2,3,4,5,6,7,8,9,"." are allowed!';
+    if (isNaN(operand1Input.value) )  {
+        if (isNaN(operand2Input.value)) {
+            errorMsg('Operator 1 and Operator 2');
+        } else {
+        errorMsg('Operator 1');
+        }
         return false;
+    } else if (isNaN(operand2Input.value)) {
+        errorMsg('Operator 2');
+         return false;
     } else {
-        errorMsgEl.textContent = '';
+        errorMsg();
         return true;
     }
 }
 
-
+function errorMsg(whereError) {
+    if (whereError) {
+      errorMsgEl.textContent = `Wrond characters are entered in ${whereError}. Only 0,1,2,3,4,5,6,7,8,9,"." are allowed!`;
+    } else {
+      errorMsgEl.textContent = ``;
+    }
+    
+}
+//    if (isNaN(operand1Input.value) || isNaN(operand2Input.value)) {
+//      errorMsgEl.textContent = 'Wrond character is entered. Only 0,1,2,3,4,5,6,7,8,9,"." are allowed!';
+//      return false;
+//    } else {
+//      errorMsgEl.textContent = '';
+//      return true;
+//    }
 // function isValid () {
 //     if (isNumber(operand1Input.value) && isNumber(operand2Input.value)) {
 //         return true
