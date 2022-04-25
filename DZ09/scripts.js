@@ -9,16 +9,14 @@ addBtnEl.addEventListener("click", onAddBtnClick);
 newTaskInput.addEventListener("input", isValid);
 
 // Захотел чтобы по нажатию на Enter добавлялась новая задача в список ToDo.
-// Этот кусок я скомуниздил из интернета и не до конца его понимаю: 
-// Когда пытаюсь его разделить на вызов обработчика и функцию(как мы обычно делаем) он перестаёт работать. 
-// Плюс он помечен как deprecated. Как сейчас правильно отслеживать нажатие кнопок?
-newTaskInput.addEventListener("keyup", (event) => {
-    if (event.keyCode === 13) {
+newTaskInput.addEventListener("keyup", enterPress);
+
+function enterPress (event) {
+    if (event.key === 'Enter') {
         event.preventDefault(); //Без этой штуки тоже работает. Зачем она?
         onAddBtnClick();
     }
-});
-
+};
 
 function onAddBtnClick() {
     if (isValid()) {   
@@ -30,18 +28,14 @@ function onAddBtnClick() {
 function isValid () {
     if (newTaskInput.value.length < 1)  {
         errorMsg('Enter something');
-        newTaskInput.classList.add('error');
         return false;
-    } else 
+    }  
     if (newTaskInput.value.length < 4) {
         errorMsg('Task is too short');
-        newTaskInput.classList.add('error');
         return false;
-    } else {
-        errorMsg();
-        newTaskInput.classList.remove('error');
-        return true;
-    }
+    } 
+    errorMsg();
+    return true;
 }
 
 function addTask() {
@@ -66,4 +60,7 @@ function taskStatus () {
 
 }
 
-const errorMsg = (error) => errorMsgEl.textContent = error;
+function errorMsg(error) {
+    errorMsgEl.textContent = error;
+    (error) ? newTaskInput.classList.add('error') : newTaskInput.classList.remove('error');
+}
