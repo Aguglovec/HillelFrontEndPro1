@@ -1,0 +1,43 @@
+.result {
+    font-weight: bold;
+}
+
+.error {
+    color: red;
+    /* box-shadow: 0 0 3px #cc0000; */
+}
+
+.taskToDo {
+    color: blue;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.taskDone {
+    color: green;
+    font-weight:100;
+    text-decoration: line-through;
+    
+}
+
+.title {
+    text-align: center;
+}
+.mainBlock {
+
+    background-color: #fff;
+    width: 600px;
+    height: 650px;
+    display: flex;
+    flex-direction: column;
+    margin: 200px auto;
+    box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+body {
+    background-image: url(img/board.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-position: top;
+
+}
