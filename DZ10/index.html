@@ -11,29 +11,35 @@
 <body class="body">
 <h1>Домашнее задание к 10 уроку Hillel-Front-End-Pro</h1>
 <div class="mainBlock">
+  <h2>Contact List</h2>
     <table id="contactList">
-      <tr class="contactItem">
+      <!-- <tr class="contactItem">
         <td class="contactName"></td>
         <td class="contactSurname"></td>
         <td class="contactNumber"></td>
         <td class="contactAction">
           <button class="contactDelete"></button>
         </td>
+      </tr> -->
+      <tr id="newContact">
+        <td class="contactName"><input type="text" id="newName" placeholder="First name" value="" autofocus></td>
+        <td class="contactSurname"><input type="text" id="newSurname" placeholder="Last name" value=""></td>
+        <td class="contactNumber"><input type="text" id="newNumber" placeholder="Phone number" value=""></td>
+        <td class="contactAction">
+          <button id="addBtn">Add</button>
+        </td>
       </tr>
     </table>
-    <input type="text" id="newName" placeholder="First name" value="" autofocus>
-    <input type="text" id="newSurnam" placeholder="Last name" value="">
-    <input type="text" id="newNumber" placeholder="Phone number" value="">
-    <div class="error" id="error"></div>
-    <button id="addBtn">Add task</button>
+        <div class="error" id="error"></div>
+    
 </div>
-<script type="text/template" id="itemTemplate">
+<script type="text/template" id="contactItemTemplate">
       <tr class="contactItem">
-        <td class="contactName">{{Name}}</td>
-        <td class="contactSurname">{{Surname}}</td>
-        <td class="contactNumber">{{Number}}</td>
+        <td class="contactName">{{name}}</td>
+        <td class="contactSurname">{{surname}}</td>
+        <td class="contactNumber">{{number}}</td>
         <td class="contactAction">
-          <button class="contactDelete"></button>
+          <button class="contactDelete">X</button>
         </td>
       </tr>
 </script>
