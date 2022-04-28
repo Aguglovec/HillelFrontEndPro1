@@ -1,6 +1,7 @@
 "use strict";
 
-
+const CONTACT_ITEM_CLASS = 'contact-item';
+const DELETE_BTN_CLASS = 'contact-delete';
 const CONTACT_ITEM_TEMPLATE = document.getElementById('contactItemTemplate').innerHTML;
 const ERROR_MESSAGES = {
     NAME: 'Enter Name',
@@ -14,64 +15,76 @@ const surnameInput = document.getElementById("newSurname");
 const numberInput = document.getElementById("newNumber");
 const errorMsgEl = document.getElementById("error"); 
 const addBtnEl = document.getElementById("addBtn");
-const contactListEL = document.getElementById("contactList");
+const contactList = document.getElementById("contactList");
 const newContactFormEL = document.getElementById("newContact");
+const ContactFormEl = document.getElementById("ContactForm")
 
+contactList.addEventListener('click', onDelBtnClick);
+ContactFormEl.addEventListener('submit', onAddBtnClick)
 
-addBtnEl.addEventListener("click", onAddBtnClick);
-// newTaskInput.addEventListener("input", isValid);
-
-// Захотел чтобы по нажатию на Enter добавлялась новая задача в список ToDo.
-// newTaskInput.addEventListener("keyup", enterPress);
-
-// function enterPress (event) {
-//     if (event.key === 'Enter') {
-//         event.preventDefault(); //Без этой штуки тоже работает. Зачем она?
-//         onAddBtnClick();
-//     }
-// };
-
-function onAddBtnClick() {
-    if (isValid()) {   
-        addContact();
+function onAddBtnClick(e) {
+    e.preventDefault();
+    const name = getContactName();
+    const surname = getContactSurname();
+    const number = getContactPhone();
+    if (isValid(name, surname, number)) {   
+        addContact(name, surname, number);
         clearInput();
     }
 }
 
-//Вопрос: как лучше проверять на пустой input? .value.length < 1 ИЛИ .value === ''?
-function isValid () {
-    if (nameInput.value.length < 1)  {
+function getContactName () {
+    return nameInput.value
+}
+
+function getContactSurname () {
+    return surnameInput.value
+}
+
+function getContactPhone () {
+    return numberInput.value
+}
+
+//Вопрос: как лучше проверять на пустой input? el.value.length < 1 ИЛИ el.value === ''?
+function isValid (name, surname, number) {
+    if (name === '')  {
         errorMsg(ERROR_MESSAGES.NAME);
+        nameInput.focus();
         return false;
     }  
-    if (surnameInput.value.length < 1)  {
+    if (surname === '')  {
         errorMsg(ERROR_MESSAGES.SURNAME);
+        surnameInput.focus();
         return false;
     }
-    if (numberInput.value.length < 1)  {
+    if (number === '')  {
         errorMsg(ERROR_MESSAGES.PHONE);
+        numberInput.focus();
         return false;
     }
     errorMsg();
+    nameInput.focus();
     return true;
 }
 
-function addContact() {
-    const contact = createContactItem();
+function addContact(name, surname, number) {
+    const contact = createContactItem (name, surname, number);
     newContactFormEL.insertAdjacentHTML('beforebegin', contact);
 }
 
-function createContactItem() {
+function createContactItem (name, surname, number) {
         return CONTACT_ITEM_TEMPLATE
-            .replace('{{name}}', nameInput.value)
-            .replace('{{surname}}', surnameInput.value)
-            .replace('{{number}}', numberInput.value);
+            .replace('{{name}}', name)
+            .replace('{{surname}}', surname)
+            .replace('{{number}}', number);
 }
 
-// function taskStatus () {
-//     this.classList.toggle('taskDone');
 
-// }
+function onDelBtnClick (e) {
+    if (e.target.classList.contains(DELETE_BTN_CLASS)) {
+        deleteContact(e.target.closest('.' + CONTACT_ITEM_CLASS));
+    }
+}
 
 function clearInput() {
     nameInput.value = '';
@@ -81,5 +94,8 @@ function clearInput() {
 
 function errorMsg(error) {
     errorMsgEl.textContent = error;
-    // (error) ? newTaskInput.classList.add('error') : newTaskInput.classList.remove('error');
+}
+
+function deleteContact(el) {
+    el.remove();
 }

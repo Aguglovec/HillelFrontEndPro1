@@ -5,41 +5,35 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../common/css/normalize.css" />
+    <link rel="stylesheet" href="../common/css/skeleton.css" />
+    <link rel="stylesheet" href="../common/css/dark-theme.css" />
     <script src="scripts.js" defer></script>
     <title>10 урок</title>
 </head>
-<body class="body">
+<body>
 <h1>Домашнее задание к 10 уроку Hillel-Front-End-Pro</h1>
-<div class="mainBlock">
+<div class="u-full-width">
   <h2>Contact List</h2>
-    <table id="contactList">
-      <!-- <tr class="contactItem">
-        <td class="contactName"></td>
-        <td class="contactSurname"></td>
-        <td class="contactNumber"></td>
-        <td class="contactAction">
-          <button class="contactDelete"></button>
-        </td>
-      </tr> -->
-      <tr id="newContact">
-        <td class="contactName"><input type="text" id="newName" placeholder="First name" value="" autofocus></td>
-        <td class="contactSurname"><input type="text" id="newSurname" placeholder="Last name" value=""></td>
-        <td class="contactNumber"><input type="text" id="newNumber" placeholder="Phone number" value=""></td>
-        <td class="contactAction">
-          <button id="addBtn">Add</button>
-        </td>
+    <table id="contactList" >
+      <tr id="newContact"></tr>
+        <form id="ContactForm">
+          <td class="contactName"><input type="text" id="newName" placeholder="First name" value="" autofocus></td>
+          <td class="contactSurname"><input type="text" id="newSurname" placeholder="Last name" value=""></td>
+          <td class="contactNumber"><input type="text" id="newNumber" placeholder="Phone number" value=""></td>
+          <td class="contactAction"><button id="addBtn" class="">Add</button></td>
+        </form>
       </tr>
     </table>
         <div class="error" id="error"></div>
-    
 </div>
 <script type="text/template" id="contactItemTemplate">
-      <tr class="contactItem">
+      <tr class="contact-item">
         <td class="contactName">{{name}}</td>
         <td class="contactSurname">{{surname}}</td>
         <td class="contactNumber">{{number}}</td>
         <td class="contactAction">
-          <button class="contactDelete">X</button>
+          <button class="contact-delete delete-btn">X</button>
         </td>
       </tr>
 </script>
