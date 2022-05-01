@@ -6,7 +6,6 @@ const DELETE_BTN_CLASS = 'delete-btn';
 const newTaskFormEl = document.getElementById('newTaskForm');
 const taskInput = document.getElementById("newTask");
 const errorMsgEl = document.getElementById("error"); 
-// const addBtnEl = document.getElementById("addBtn");
 const taskListEL = document.getElementById("toDoList");
 const taskTemplate = document.getElementById('taskTemplate').innerHTML;
 
@@ -42,12 +41,12 @@ function onTaskSubmit(e) {
 }
 
 function onTaskCkick(e) {
+    const id = getTaskId(e.target);
+    
     if (e.target.classList.contains(DELETE_BTN_CLASS)) {
-        const id = getTaskId(e.target);
         removeTask(id);
     }
     if (e.target.classList.contains(TASK_CLASS)) {
-        const id = getTaskId(e.target);
         taskStatusToggle(id);
     }
 }
