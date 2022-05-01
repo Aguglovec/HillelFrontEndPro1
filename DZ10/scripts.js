@@ -17,10 +17,10 @@ const errorMsgEl = document.getElementById("error");
 const addBtnEl = document.getElementById("addBtn");
 const contactList = document.getElementById("contactList");
 const newContactFormEL = document.getElementById("newContact");
-const ContactFormEl = document.getElementById("ContactForm")
+const contactFormEl = document.getElementById("ContactForm")
 
 contactList.addEventListener('click', onDelBtnClick);
-ContactFormEl.addEventListener('submit', onAddBtnClick)
+contactFormEl.addEventListener('submit', onAddBtnClick)
 
 function onAddBtnClick(e) {
     e.preventDefault();
