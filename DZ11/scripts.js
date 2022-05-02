@@ -1,6 +1,8 @@
 "use strict";
 
 const TASK_CLASS = 'taskItem';
+const UNFINISHED_TASK_CLASS = 'taskToDo';
+const COMPLITED_TASK_CLASS = 'taskDone';
 const DELETE_BTN_CLASS = 'delete-btn';
 
 const newTaskFormEl = document.getElementById('newTaskForm');
@@ -17,12 +19,12 @@ let taskList = [
     {
         id:1,
         task: "task 1",
-        taskStatus: 'taskDone',
+        taskStatus: COMPLITED_TASK_CLASS,
     },
     {
         id:2,
         task: "task 2",
-        taskStatus: 'taskToDo',
+        taskStatus: UNFINISHED_TASK_CLASS,
     }
 ];
 
@@ -66,7 +68,7 @@ function isValid () {
 
 function addTask() {
     const task = {
-        taskStatus: 'taskToDo',
+        taskStatus: UNFINISHED_TASK_CLASS,
         task: taskInput.value,
         id: Date.now(),
     };
@@ -98,7 +100,7 @@ function removeTask(id) {
 
 function taskStatusToggle (id) {
     const index = taskList.findIndex((obj) => obj.id === id);
-    taskList[index].taskStatus =  taskList[index].taskStatus === 'taskToDo' ? 'taskDone' : 'taskToDo';
+    taskList[index].taskStatus =  taskList[index].taskStatus === UNFINISHED_TASK_CLASS ? COMPLITED_TASK_CLASS : UNFINISHED_TASK_CLASS;
     renderTaskList();
 }
 
