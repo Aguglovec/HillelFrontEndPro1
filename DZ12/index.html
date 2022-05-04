@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../common/css/normalize.css" />
+    <link rel="stylesheet" href="../common/css/skeleton.css" />
+    <link rel="stylesheet" href="../common/css/dark-theme.css" />
+    <script src="../common/js/utils.js" defer></script>
+    <script src="scripts.js" defer></script>
+    <title>12 урок</title>
+</head>
+<body>
+
+<h3>Домашнее задание к 12 уроку Hillel-Front-End-Pro</h3>
+<div class="u-full-width mainBlock">
+  <h1>Contact List</h1>
+  <form id="ContactForm">
+    <table class="box">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>Phone</th>
+          <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody id="contactList"></tbody>
+    <tfoot>
+      <tr id="newContact">
+        <td><input class="form-input" type="text" name="name" id="newName" placeholder="First name" value="" autofocus></td>
+        <td><input class="form-input" type="text" name="surname" id="newSurname" placeholder="Last name" value=""></td>
+        <td><input class="form-input" type="text" name="phone" id="newNumber" placeholder="Phone number" value=""></td>
+        <input class="form-input" type="text" name="id" id="newId" placeholder="" value="new" hidden>
+        <td class="contactAction"><button id="addBtn" class="">Save contact</button></td>
+      </tr>
+    </tfoot>
+    </table>
+  </form>
+  <div class="error" id="error"></div>
+</div>
+
+<script type="text/template" id="contactItemTemplate">
+  <tr class="contact-item" data-item-id="{{id}}">
+    <td class="contactName">{{name}}</td>
+    <td class="contactSurname">{{surname}}</td>
+    <td class="contactNumber">{{phone}}</td>
+    <td class="contactAction">
+      <button type="button" class="contact-edit edit-btn">Edit</button>
+      <button type="button" class="contact-delete delete-btn">X</button>
+    </td>
+  </tr>
+</script>
+
+</body>
+</html>
