@@ -8,7 +8,7 @@ function interpolate(template, obj) {
 
 function interpolateDeeper(template, obj) {
     for (key in obj) {
-        console.log(key +" "+ typeof (obj[key]));
+
         if (typeof (obj[key]) !== "object") {
             template = template.replaceAll(`{{${key}}}`, obj[key]);
             

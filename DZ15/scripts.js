@@ -1,21 +1,22 @@
 "use strict";
 
-const ITEM_CLASS = 'contact-item';
+const ITEM_CLASS = 'user-item';
 const DELETE_BTN_CLASS = 'delete-btn';
 const EDIT_BTN_CLASS = 'edit-btn';
 const STORAGE_KEY = 'itemList';
 
 const ERROR_MESSAGES = {
     name: 'Enter Name',
-    surname: 'Enter Surname',
+    email: 'Enter Email',
     phone: 'Enter Phone number',
+    address: 'Enter Adress',
     invalidPhone : 'Phone should be a number',
 };
 
-const newItemFormEl = document.querySelector("#ContactForm");
+const newItemFormEl = document.querySelector("#userForm");
 const errorMsgEl = document.querySelector("#error"); 
-const itemListEL = document.querySelector("#contactList");
-const itemTemplate = document.querySelector("#contactItemTemplate").innerHTML;
+const itemListEL = document.querySelector("#userList");
+const itemTemplate = document.querySelector("#userItemTemplate").innerHTML;
 const formInputs = document.querySelectorAll('.form-input');
 
 newItemFormEl.addEventListener("submit", onItemSubmit);
@@ -54,8 +55,7 @@ function init() {
     fetch ('https://jsonplaceholder.typicode.com/users')
         .then ((res) => res.json(res))
         .then ((data) => {
-            console.log(data);
-            itemList = data
+            itemList = data;
             renderItemList();
         });
 
@@ -101,7 +101,7 @@ function addItem(item) {
             oldItem[key] = item[key];
         }
     }
-    console.log (item);
+    // console.log (item);
     // saveData();
     renderItemList();
 }
@@ -142,7 +142,7 @@ function removeItem(itemId) {
 function editItem (id) {
     const item = findItem(id);
     formInputs.forEach((inp) => inp.value = item[inp.name]);
-    console.log (item);
+    // console.log (item);
 }
 
 function errorMsg(error) {
