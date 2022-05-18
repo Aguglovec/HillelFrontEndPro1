@@ -15,20 +15,20 @@
 // посыпать приправой (+ 15 тугриков, 0 калорий)
 // полить майонезом (+ 20 тугриков, + 5 калорий).
 
-const SIZE_SMALL = {
-    _price: 50,
-    _callories: 20,
-}
+// const SIZE_SMALL = {
+//     _price: 50,
+//     _callories: 20,
+// }
 
-const SIZE_REGULAR = {
-    _price: 75,
-    _callories: 30,
-}
+// const SIZE_REGULAR = {
+//     _price: 75,
+//     _callories: 30,
+// }
 
-const SIZE_LARGE = {
-    _price: 100,
-    _callories: 40,
-}
+// const SIZE_LARGE = {
+//     _price: 100,
+//     _callories: 40,
+// }
 
 const TOPPING_CHEESE = {
     _price: 20,
@@ -57,9 +57,25 @@ const TOPPING_MAYO = {
 
 class Hamburger {
     constructor(size) {
-        this._price = size._price;
-        this._callories = size._callories;
+        this._price = Hamburger[size]._price;
+        this._callories = Hamburger[size]._callories;
     }
+
+    static SIZE_SMALL= {
+        _price: 50,
+        _callories: 20,
+    };
+    
+    static SIZE_REGULAR= {
+        _price: 75,
+        _callories: 30,
+    };
+    
+    static SIZE_LARGE= {
+        _price: 100,
+        _callories: 40,
+    };
+
 
     get price () {
         return this._price;
@@ -86,11 +102,11 @@ class Hamburger {
     removeTopping (toppingObj) {
         for (let key in toppingObj) {
             this[key] -= toppingObj[key];
-    }
+        }
     }
 }
 
-const hamburger = new Hamburger(SIZE_SMALL);
+const hamburger = new Hamburger('SIZE_SMALL');
 // добавка из майонеза
 hamburger.addTopping(TOPPING_MAYO);
 hamburger.addTopping(TOPPING_POTATO);
