@@ -51,8 +51,6 @@ function onItemCkick(e) {
 }
 
 function init() {
-    // itemList = restoreData();
-    // renderItemList();
     fetchList ();
 }
 
@@ -85,11 +83,11 @@ function isValid (obj) {
             return false;
         }
     }
-    // if (isNaN(obj.phone))  {    //проверка номера на число
-    //     errorMsg(ERROR_MESSAGES.invalidPhone);
-    //     document.querySelector(`[name="phone"]`).focus();
-    //     return false;
-    // }
+     if (isNaN(obj.phone))  {    //проверка номера на число
+        errorMsg(ERROR_MESSAGES.invalidPhone);
+         document.querySelector(`[name="phone"]`).focus();
+         return false;
+     }
     errorMsg();
     formInputs[0].focus();
     return true;
@@ -98,7 +96,6 @@ function isValid (obj) {
 function addItem(item) {
     if (isNaN(item.id)) {
         delete item.id;
-        console.log (JSON.stringify(item));
         fetch ( API_URL, {
             method: 'POST',
             body: JSON.stringify(item),
@@ -110,10 +107,16 @@ function addItem(item) {
                 fetchList();
                 });
     } else {
-        const oldItem = findItem(item.id);
-        for (let key in oldItem) {
-            oldItem[key] = item[key];
-        }
+        fetch(API_URL+'/'+item.id, {
+                    method: 'PUT',
+                    body: JSON.stringify(item),
+                    headers: {
+                      'Content-Type': 'application/json'
+                    }
+                  })
+                  .then(() => {
+                    fetchList();
+                  });
     }
 }
 
@@ -125,10 +128,8 @@ function renderItemList() {
 }
 
 function generateItemHtml (item) {
-    //Первый вариант. Зайдёт в  address и заберёт нужные свойства:
-    // return interpolate(interpolate(itemTemplate, item), item.address);
 
-    //Второй вариант. Переписал функцию interpolate, добавил рекурсию, чтобы она перебирала объекты на всю глубину.
+    //Переписал функцию interpolate, добавил рекурсию, чтобы она перебирала объекты на всю глубину.
     // Плюс - масштабируемость. Достаточно добавить новые свойства только в шаблон, и не надо переписывать код.
     // Минус - все свойства должны иметь уникальные имена иначе будет записано первое, которое попадётся.
     // В нашем случае свойство name есть как у user так и у company
@@ -141,7 +142,7 @@ function clearInput() {
 
 function getItemId(el) {
     const itemEl = el.closest('.'+ITEM_CLASS);
-    return +itemEl.dataset.itemId;
+    return itemEl.dataset.itemId;
 }
 
 function removeItem(itemId) {
