@@ -85,9 +85,9 @@ function isValid (obj) {
     }
      if (isNaN(obj.phone))  {    //проверка номера на число
         errorMsg(ERROR_MESSAGES.invalidPhone);
-         document.querySelector(`[name="phone"]`).focus();
-         return false;
-     }
+        document.querySelector(`[name="phone"]`).focus();
+        return false;
+    }
     errorMsg();
     formInputs[0].focus();
     return true;
@@ -111,12 +111,12 @@ function addItem(item) {
                     method: 'PUT',
                     body: JSON.stringify(item),
                     headers: {
-                      'Content-Type': 'application/json'
+                    'Content-Type': 'application/json'
                     }
-                  })
-                  .then(() => {
+                })
+                .then(() => {
                     fetchList();
-                  });
+                });
     }
 }
 
