@@ -1,3 +1,4 @@
+           // let t = this.temp;
 "use strict";
 
 // const ITEM_CLASS = 'album-item';
@@ -29,15 +30,15 @@
 class ItemList {
     constructor(baseUrl, listEL, template, itemClass) {
         this._api = new RespApi(baseUrl);
-        this.list = [];
+        this._list = [];
         this.listEL = document.querySelector(listEL);
-        this.template = document.querySelector(template).innerHTML;
+        this.temp = document.querySelector(template).innerHTML;
         this.listEL.addEventListener("click", this.onItemCkick);
         this.itemClass = itemClass;
     }
 
     onItemCkick(e) {
-        const id = getItemId(e.target);
+        const id = this.getItemId(e.target);
         console.log(id);
         
     }
@@ -55,11 +56,30 @@ class ItemList {
         return albumList.find((obj) => obj.id === id);
     }
     renderList() {
+      console.log (4);
+      console.log (this.temp);
         this.listEL.innerHTML = this._list.map(this.generateItemHtml).join('\n');
     }
     
     generateItemHtml (item) {
-        return this.interpolateDeeper(this.template, item)
+            //console.log (5);
+//console.log (this.temp);
+//console.log (6);
+      //console.log (item);
+      //console.log (this.temp);
+      return interpolate (item)
+    }
+       
+interpolate (obj) {
+    //console.log (this.templ);
+  console.log (this.obj);
+    let templ = this.temp;
+
+    for (key in obj) {
+      templ = templ.replaceAll(`{{${key}}}`, obj[key]);
+    }
+
+    return templ;
     }
     
     getItemId(el) {
@@ -70,7 +90,7 @@ class ItemList {
 
 }
 
-let albumL = new ItemList (
+let al = new ItemList (
     'https://jsonplaceholder.typicode.com/albums/',
     '#albumList', 
     '#albumItemTemplate',
@@ -85,8 +105,7 @@ let albumL = new ItemList (
 
 function init() {
 
-
-    albumL.fetchList();
+    al.fetchList();
 
     // let photoL = new ItemList (
     //     `'https://jsonplaceholder.typicode.com/photos?albumId='+${albumL.list[0].id}`,
