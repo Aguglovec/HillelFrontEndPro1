@@ -1,21 +1,36 @@
-.error {
-    margin: auto;
-    color: red;
-    font-weight: bold;
-    font-size: 200%;
-    /* text-align: center; */
-
-}
-
 body {
-    text-align: center;
+    background-color: #e5e5e5;
+    font-family: 'Montserrat', sans-serif;
 }
-.mainBlock {
+
+.main-container {
+    /* background-color: #fff; */
+    /* text-align: center; */
+    width: 1200px;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+/*Main content section*/
+
+.gallery {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.sidebar {
+
+    width: 30%;
     display: flex;
     flex-direction: column;
-}
+    font-style: normal;
+    font-weight: bold;
+    /* font-size: 22px; */
+    line-height: 27px;
 
-.box {
-    margin: auto;
+    margin-left: 10px;
 }
-

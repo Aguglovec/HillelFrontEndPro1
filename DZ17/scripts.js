@@ -1,165 +1,131 @@
 "use strict";
 
-const ITEM_CLASS = 'user-item';
-const DELETE_BTN_CLASS = 'delete-btn';
-const EDIT_BTN_CLASS = 'edit-btn';
-const STORAGE_KEY = 'itemList';
-const API_URL = 'https://5dd3d5ba8b5e080014dc4bfa.mockapi.io/users'
+// const ITEM_CLASS = 'album-item';
+// const PHOTO_CLASS = 'photo-item';
 
-const ERROR_MESSAGES = {
-    name: 'Enter Name',
-    email: 'Enter Email',
-    phone: 'Enter Phone number',
-    address: 'Enter Adress',
-    invalidPhone : 'Phone should be a number',
-};
-
-const newItemFormEl = document.querySelector("#userForm");
-const errorMsgEl = document.querySelector("#error"); 
-const itemListEL = document.querySelector("#userList");
-const itemTemplate = document.querySelector("#userItemTemplate").innerHTML;
-const formInputs = document.querySelectorAll('.form-input');
-
-newItemFormEl.addEventListener("submit", onItemSubmit);
-itemListEL.addEventListener("click", onItemCkick);
-
-let itemList = [];
-init();
+// const albumsApi = new RespApi(
+//     'https://jsonplaceholder.typicode.com/albums/',
+//     );
+// const photosApi = new RespApi(
+//     'https://jsonplaceholder.typicode.com/photos?albumId=',
+//     );
 
 
 
-function onItemSubmit(e) {
-    e.preventDefault();
-    const newItem = getItem();
 
-    if (isValid(newItem)) {   
-        addItem(newItem);
-        clearInput();
+// const albumListEL = document.querySelector("#albumList");
+// const albumTemplate = document.querySelector("#albumItemTemplate").innerHTML;
+
+// const photoListEL = document.querySelector("#photoList");
+// const photoTemplate = document.querySelector("#photoItemTemplate").innerHTML;
+
+// albumListEL.addEventListener("click", onItemCkick);
+// photoListEL.addEventListener("click", onItemCkick);
+
+// let albumList = [];
+// let photoList = [];
+
+
+class ItemList {
+    constructor(baseUrl, listEL, template, itemClass) {
+        this._api = new RespApi(baseUrl);
+        this.list = [];
+        this.listEL = document.querySelector(listEL);
+        this.template = document.querySelector(template).innerHTML;
+        this.listEL.addEventListener("click", this.onItemCkick);
+        this.itemClass = itemClass;
     }
+
+    onItemCkick(e) {
+        const id = getItemId(e.target);
+        console.log(id);
+        
+    }
+
+    fetchList() {
+        this._api.getList()
+        .then ((data) => {
+            this._list = data;
+            this.renderList();
+            console.log(this._list);
+        });
+    } 
+    
+    findItem(id) {
+        return albumList.find((obj) => obj.id === id);
+    }
+    renderList() {
+        this.listEL.innerHTML = this._list.map(this.generateItemHtml).join('\n');
+    }
+    
+    generateItemHtml (item) {
+        return this.interpolateDeeper(this.template, item)
+    }
+    
+    getItemId(el) {
+        const itemEl = el.closest('.' + this.itemClass);
+        return itemEl.dataset.itemId;
+    }
+
+
 }
 
-function onItemCkick(e) {
-    const id = getItemId(e.target);
-    console.log(id);
-    if (e.target.classList.contains(DELETE_BTN_CLASS)) {
-        removeItem(id);
-        clearInput();
-    }
-    if (e.target.classList.contains(EDIT_BTN_CLASS)) {
-        editItem(id);
-    }
-}
+let albumL = new ItemList (
+    'https://jsonplaceholder.typicode.com/albums/',
+    '#albumList', 
+    '#albumItemTemplate',
+    'album-item', 
+    );
+
+
+
+
+    init();
+
 
 function init() {
-    fetchList ();
-}
 
-function fetchList() {
-    fetch (API_URL)
-    .then ((res) => res.json(res))
-    .then ((data) => {
-        itemList = data;
-        renderItemList();
-        console.log(itemList);
-    });
-} 
 
-function getItem() {
-    const item = {};
+    albumL.fetchList();
 
-    formInputs.forEach((inp) => {
-        item[inp.name] = inp.value;
-    });
+    // let photoL = new ItemList (
+    //     `'https://jsonplaceholder.typicode.com/photos?albumId='+${albumL.list[0].id}`,
+    //     '#photoList', 
+    //     '#photoItemTemplate',
+    //     'photo-item', 
+    //     );
 
-    return item;
+    // photoL.fetchList();
 }
 
 
-function isValid (obj) {
-    for (let key in obj) {
-        if (obj[key] === '')  {  //проверка на пустые поля всех input и выводом ошибки +с фокусировкой на поле с ошибкой
-            errorMsg(ERROR_MESSAGES[key]);
-            document.querySelector(`[name="${key}"]`).focus();
-            return false;
-        }
-    }
-     if (isNaN(obj.phone))  {    //проверка номера на число
-        errorMsg(ERROR_MESSAGES.invalidPhone);
-        document.querySelector(`[name="phone"]`).focus();
-        return false;
-    }
-    errorMsg();
-    formInputs[0].focus();
-    return true;
-}
+// function fetchList() {
+//     albumsApi.getList()
+//     .then ((data) => {
+//         albumList = data;
+//         renderList(albumList, albumListEL);
+//         console.log(albumList);
+//     });
+// } 
 
-function addItem(item) {
-    if (isNaN(item.id)) {
-        delete item.id;
-        fetch ( API_URL, {
-            method: 'POST',
-            body: JSON.stringify(item),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then (() => {
-                fetchList();
-                });
-    } else {
-        fetch(API_URL+'/'+item.id, {
-                    method: 'PUT',
-                    body: JSON.stringify(item),
-                    headers: {
-                    'Content-Type': 'application/json'
-                    }
-                })
-                .then(() => {
-                    fetchList();
-                });
-    }
-}
+// function onItemCkick(e) {
+//     const id = getItemId(e.target);
+//     console.log(id);
+    
+// }
+// function findItem(id) {
+//     return albumList.find((obj) => obj.id === id);
+// }
+// function renderList(list, listEL) {
+//     listEL.innerHTML = list.map(generateItemHtml).join('\n');
+// }
 
-function findItem(id) {
-    return itemList.find((obj) => obj.id === id);
-}
-function renderItemList() {
-    itemListEL.innerHTML = itemList.map(generateItemHtml).join('\n');
-}
+// function generateItemHtml (item) {
+//     return interpolateDeeper(albumTemplate, item)
+// }
 
-function generateItemHtml (item) {
+// function getItemId(el) {
+//     const itemEl = el.closest('.'+ITEM_CLASS);
+//     return itemEl.dataset.itemId;
+// }
 
-    //Переписал функцию interpolate, добавил рекурсию, чтобы она перебирала объекты на всю глубину.
-    // Плюс - масштабируемость. Достаточно добавить новые свойства только в шаблон, и не надо переписывать код.
-    // Минус - все свойства должны иметь уникальные имена иначе будет записано первое, которое попадётся.
-    // В нашем случае свойство name есть как у user так и у company
-    return interpolateDeeper(itemTemplate, item)
-}
-
-function clearInput() {
-    newItemFormEl.reset();
-}
-
-function getItemId(el) {
-    const itemEl = el.closest('.'+ITEM_CLASS);
-    return itemEl.dataset.itemId;
-}
-
-function removeItem(itemId) {
-    fetch ( API_URL+'/'+ itemId, {
-        method: 'DELETE',
-    })
-        .then (() => {
-            fetchList();
-            });
-}
-
-function editItem (id) {
-    const item = findItem(id);
-    formInputs.forEach((inp) => inp.value = item[inp.name]);
-    console.log (item);
-}
-
-function errorMsg(error) {
-    errorMsgEl.textContent = error;
-}
