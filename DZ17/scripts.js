@@ -1,150 +1,196 @@
-           // let t = this.temp;
 "use strict";
 
-// const ITEM_CLASS = 'album-item';
-// const PHOTO_CLASS = 'photo-item';
+const ALBUM_CLASS = 'album-item';
+const PHOTO_CLASS = 'photo-item';
 
-// const albumsApi = new RespApi(
-//     'https://jsonplaceholder.typicode.com/albums/',
-//     );
-// const photosApi = new RespApi(
-//     'https://jsonplaceholder.typicode.com/photos?albumId=',
-//     );
+const albumsApi = new RespApi('https://jsonplaceholder.typicode.com/albums/');
+const photosApi = new RespApi('https://jsonplaceholder.typicode.com/photos?albumId=');
 
+const albumListEL = document.querySelector("#albumList");
+const photoListEL = document.querySelector("#photoList");
+const bigEL = document.querySelector("#bigPhoto");
 
+const albumTemplate = document.querySelector("#albumItemTemplate").innerHTML;
+const photoTemplate = document.querySelector("#photoItemTemplate").innerHTML;
+const photoBigTemplate = document.querySelector("#photoBigTemplate").innerHTML;
 
+albumListEL.addEventListener("click", onAlbumClick);
+photoListEL.addEventListener("click", onPhotoClick);
+bigEL.addEventListener("click", onBigClick);
 
-// const albumListEL = document.querySelector("#albumList");
-// const albumTemplate = document.querySelector("#albumItemTemplate").innerHTML;
+let albumList = [];
+let photoList = [];
 
-// const photoListEL = document.querySelector("#photoList");
-// const photoTemplate = document.querySelector("#photoItemTemplate").innerHTML;
-
-// albumListEL.addEventListener("click", onItemCkick);
-// photoListEL.addEventListener("click", onItemCkick);
-
-// let albumList = [];
-// let photoList = [];
+init();
 
 
-class ItemList {
-    constructor(baseUrl, listEL, template, itemClass) {
-        this._api = new RespApi(baseUrl);
-        this._list = [];
-        this.listEL = document.querySelector(listEL);
-        this.temp = document.querySelector(template).innerHTML;
-        this.listEL.addEventListener("click", this.onItemCkick);
-        this.itemClass = itemClass;
-    }
-
-    onItemCkick(e) {
-        const id = this.getItemId(e.target);
-        console.log(id);
-        
-    }
-
-    fetchList() {
-        this._api.getList()
-        .then ((data) => {
-            this._list = data;
-            this.renderList();
-            console.log(this._list);
-        });
-    } 
-    
-    findItem(id) {
-        return albumList.find((obj) => obj.id === id);
-    }
-    renderList() {
-      console.log (4);
-      console.log (this.temp);
-        this.listEL.innerHTML = this._list.map(this.generateItemHtml).join('\n');
-    }
-    
-    generateItemHtml (item) {
-            //console.log (5);
-//console.log (this.temp);
-//console.log (6);
-      //console.log (item);
-      //console.log (this.temp);
-      return interpolate (item)
-    }
-       
-interpolate (obj) {
-    //console.log (this.templ);
-  console.log (this.obj);
-    let templ = this.temp;
-
-    for (key in obj) {
-      templ = templ.replaceAll(`{{${key}}}`, obj[key]);
-    }
-
-    return templ;
-    }
-    
-    getItemId(el) {
-        const itemEl = el.closest('.' + this.itemClass);
-        return itemEl.dataset.itemId;
-    }
-
-
+function onAlbumClick(e) {
+    const id = +getItemId(e.target, ALBUM_CLASS);
+    setPhotosApi (id); 
+    console.log(photosApi._baseUrl);
+    fetchPhotoList();
 }
 
-let al = new ItemList (
-    'https://jsonplaceholder.typicode.com/albums/',
-    '#albumList', 
-    '#albumItemTemplate',
-    'album-item', 
-    );
+function onPhotoClick(e) {
+    const id = +getItemId(e.target, PHOTO_CLASS);
+    bigEL.innerHTML = interpolate(photoBigTemplate, findPhotoItem(id));
+    bigEL.classList.toggle('hidden');
+}
 
-
-
-
-    init();
+function onBigClick(e) {
+    bigEL.classList.toggle('hidden');
+    bigEL.innerHTML = '';
+}
 
 
 function init() {
+    fetchAlbumList()
+}
 
-    al.fetchList();
+function fetchAlbumList() {
+    albumsApi.getList()
+    .then ((data) => {
+        albumList = data;
+        renderList(albumList, albumListEL, albumTemplate);
+    })
+    .then  (() => {
+        setPhotosApi (albumList[0].id);
+        fetchPhotoList();
+    })
+} 
 
-    // let photoL = new ItemList (
-    //     `'https://jsonplaceholder.typicode.com/photos?albumId='+${albumL.list[0].id}`,
-    //     '#photoList', 
-    //     '#photoItemTemplate',
-    //     'photo-item', 
-    //     );
+function fetchPhotoList() {
+    photosApi.getList()
+    .then ((data) => {
+        photoList = data;
+        renderList(photoList, photoListEL, photoTemplate);
+    });
+}
 
-    // photoL.fetchList();
+function setPhotosApi (id) {
+    photosApi._baseUrl = 'https://jsonplaceholder.typicode.com/photos?albumId=' + id;
+}
+
+function getItemId(el, listClass) {
+    const itemEl = el.closest('.'+listClass);
+    return itemEl.dataset.itemId;
+}
+
+function findPhotoItem(id) {
+    return photoList.find((obj) => obj.id === id);
+}
+
+function renderList(list, listEL, htmlTempalate) {
+    listEL.innerHTML = list.map((e) => interpolate(htmlTempalate, e)).join('\n');
 }
 
 
-// function fetchList() {
-//     albumsApi.getList()
-//     .then ((data) => {
-//         albumList = data;
-//         renderList(albumList, albumListEL);
-//         console.log(albumList);
-//     });
-// } 
 
-// function onItemCkick(e) {
-//     const id = getItemId(e.target);
-//     console.log(id);
+
+
+
+// class ItemList {
+//     constructor(baseUrl, listEL, template, itemClass) {
+//         this._api = new RespApi(baseUrl);
+//         this._list = [];
+//         this.listEL = document.querySelector(listEL);
+//         this.temp = document.querySelector(template).innerHTML;
+//         this.listEL.addEventListener("click", this.onItemClick);
+//         this.itemClass = itemClass;
+//     }
+
+
     
-// }
-// function findItem(id) {
-//     return albumList.find((obj) => obj.id === id);
-// }
-// function renderList(list, listEL) {
-//     listEL.innerHTML = list.map(generateItemHtml).join('\n');
+//     onItemClick(e) {
+//         console.log(e.target);
+//         const itemCls = this.itemClass;
+//         const itemEl = e.target.closest(itemCls);
+//         console.log(e.target.closest(itemCls));
+        
+//     }
+
+//     fetchList() {
+//         this._api.getList()
+//         .then ((data) => {
+//             this._list = data;
+//             this.renderList();
+//             return this._list[0].id;
+//         });
+//         // .then (() => {
+//         //     photoList._api._baseUrl = 'https://jsonplaceholder.typicode.com/photos?albumId=' + albums._list[0].id;
+//         //     photoList.fetchList();
+//         // });
+//     } 
+    
+//     getItemId(el) {
+//         const itemEl = el.closest('.' + this.itemClass);
+//         return itemEl.dataset.itemId;
+//     }
+
+//     findItem(id) {
+//         return albumList.find((obj) => obj.id === id);
+//     }
+
+//     renderList() {
+//         this.listEL.innerHTML = this._list.map((e) => this.generateItemHtml(e)).join('\n');
+//     }
+    
+//     generateItemHtml (item) {
+//     return this.interpol (item)
+//     }
+
+//     interpol (obj) {
+//         let templ = this.temp;
+//         for (let key in obj) {
+//             templ = templ.replaceAll(`{{${key}}}`, obj[key]);
+//         }
+//         return templ;
+//     }
+    
+//     setPhotoApi (id) {
+//         photoList._api._baseUrl = 'https://jsonplaceholder.typicode.com/photos?albumId=' + id;
+//     }
+
+
 // }
 
-// function generateItemHtml (item) {
-//     return interpolateDeeper(albumTemplate, item)
-// }
+// let photoList = new ItemList (
+//     'https://jsonplaceholder.typicode.com/photos?albumId=',
+//     '#photoList', 
+//     '#photoItemTemplate',
+//     'photo-item', 
+//     );
 
-// function getItemId(el) {
-//     const itemEl = el.closest('.'+ITEM_CLASS);
-//     return itemEl.dataset.itemId;
-// }
+// let albums = new ItemList (
+//     'https://jsonplaceholder.typicode.com/albums/',
+//     '#albumList', 
+//     '#albumItemTemplate',
+//     'album-item', 
+//     );
+
+
+// function init () { new Promise (() =>
+//     albums.fetchList()
+//     .then(id => {
+//     photoList.setPhotoApi(id);
+//     photoList.fetchList();
+//     })
+//     // .then(() => {
+//     //     photoList.fetchList();
+//     //     })
+
+// ); 
+//     }
+
+// // function init () {
+// //     albums.fetchList()
+// //         .then ((id) => {
+// //             photoList._api._baseUrl = 'https://jsonplaceholder.typicode.com/photos?albumId=' + id;
+// //             photoList.fetchList();
+// //         });
+                
+            
+// //             }
+
+// init();
 
