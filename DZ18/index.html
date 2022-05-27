@@ -17,31 +17,18 @@
 <body>
 
   <h3>Домашнее задание к 18 уроку Hillel-Front-End-Pro</h3>
-  <div class="big-photo center hidden" id="bigPhoto"></div>
   <div class="main-container">
-    
-      <div class="sidebar" >
-        <h4>Albums</h4>
-        <div id="albumList"></div>
-      </div>
-
-      <div class="gallery">
-        <h4>Photos</h4>
-        <div id="photoList"></div>
-      </div>
+    <div class="header">
+      <button type="submit" id="newMemoButton">Create new memo</button>
+    </div>
+      <div class="memoDesk" >
   </div>
 
-<script type="text/template" id="albumItemTemplate">
-  <div class="album-item" data-item-id="{{id}}">{{title}}</div>
+<script type="text/template" id="memoItemTemplate">
+  <div class="memo" data-item-id="{{id}}">
+  <div class="delete-area">X</div> <input type="textarea"></div>
 </script>
 
-<script type="text/template" id="photoItemTemplate">
-    <img class="photo-item" src="{{thumbnailUrl}}" data-item-id="{{id}}" data-url="{{url}}">
-</script>
-
-<script type="text/template" id="photoBigTemplate">
-  <img class="photo-item center" src="{{url}}" data-item-id="{{id}}">
-</script>
 
 </body>
 </html>
