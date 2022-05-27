@@ -1,214 +1,170 @@
 "use strict";
 
-// const ALBUM_CLASS = 'album-item';
-// const PHOTO_CLASS = 'photo-item';
+const MEMO_CLASS = 'memo';
 
-// const albumsApi = new RespApi('https://jsonplaceholder.typicode.com/albums/');
-// const photosApi = new RespApi('https://jsonplaceholder.typicode.com/photos?albumId=');
+const memoApi = new RespApi('https://5dd3d5ba8b5e080014dc4bfa.mockapi.io/stickers/');
+const memoListEL = document.querySelector("#memoList");
+const memoTemplate = document.querySelector("#memoItemTemplate").innerHTML;
+const  newMemoBtnEl = document.querySelector("#newMemoButton");
 
-// const albumListEL = document.querySelector("#albumList");
-// const photoListEL = document.querySelector("#photoList");
-// const bigEL = document.querySelector("#bigPhoto");
+newMemoBtnEl.addEventListener('click', onAddNewClick);
+memoListEL.addEventListener("click", onDelClick);
+memoListEL.addEventListener('change', onItemUpdate);
 
-// const albumTemplate = document.querySelector("#albumItemTemplate").innerHTML;
-// const photoTemplate = document.querySelector("#photoItemTemplate").innerHTML;
-// const photoBigTemplate = document.querySelector("#photoBigTemplate").innerHTML;
-
-// albumListEL.addEventListener("click", onAlbumClick);
-// photoListEL.addEventListener("click", onPhotoClick);
-// bigEL.addEventListener("click", onBigClick);
-
-// let albumList = [];
-// let photoList = [];
-
-// init();
-
-
-// function onAlbumClick(e) {
-//     const id = +getItemId(e.target, ALBUM_CLASS);
-//     setPhotosApi (id); 
-//     console.log(photosApi._baseUrl);
-//     fetchPhotoList();
-// }
-
-// function onPhotoClick(e) {
-//     const id = +getItemId(e.target, PHOTO_CLASS);
-//     bigEL.innerHTML = interpolate(photoBigTemplate, findPhotoItem(id));
-//     bigEL.classList.toggle('hidden');
-// }
-
-// function onBigClick(e) {
-//     bigEL.classList.toggle('hidden');
-//     bigEL.innerHTML = '';
-// }
-
-
-// function init() {
-//     fetchAlbumList()
-// }
-
-// function fetchAlbumList() {
-//     albumsApi.getList()
-//     .then ((data) => {
-//         albumList = data;
-//         renderList(albumList, albumListEL, albumTemplate);
-//     })
-//     .then  (() => {
-//         setPhotosApi (albumList[0].id);
-//         fetchPhotoList();
-//     })
-// } 
-
-// function fetchPhotoList() {
-//     photosApi.getList()
-//     .then ((data) => {
-//         photoList = data;
-//         renderList(photoList, photoListEL, photoTemplate);
-//     });
-// }
-
-// function setPhotosApi (id) {
-//     photosApi._baseUrl = 'https://jsonplaceholder.typicode.com/photos?albumId=' + id;
-// }
-
-// function getItemId(el, listClass) {
-//     const itemEl = el.closest('.'+listClass);
-//     return itemEl.dataset.itemId;
-// }
-
-// function findPhotoItem(id) {
-//     return photoList.find((obj) => obj.id === id);
-// }
-
-// function renderList(list, listEL, htmlTempalate) {
-//     listEL.innerHTML = list.map((e) => interpolate(htmlTempalate, e)).join('\n');
-// }
-
-
-
-
-
-// albumListEL.addEventListener("click", onAlbumClick);
-// photoListEL.addEventListener("click", onPhotoClick);
-// bigEL.addEventListener("click", onBigClick);
-
-// function onAlbumClick(e) {
-//         const id = +getItemId(e.target, ALBUM_CLASS);
-//         setPhotosApi (id); 
-//         console.log(photosApi._baseUrl);
-//         fetchPhotoList();
-//     }
-    
-//     function onPhotoClick(e) {
-//         const id = +getItemId(e.target, PHOTO_CLASS);
-//         bigEL.innerHTML = interpolate(photoBigTemplate, findPhotoItem(id));
-//         bigEL.classList.toggle('hidden');
-//     }
-    
-//     function onBigClick(e) {
-//         bigEL.classList.toggle('hidden');
-//         bigEL.innerHTML = '';
-//     }
-
-
-
-class ItemList {
-    constructor(baseUrl, listEL, template, itemClass) {
-        this._baseUrl = baseUrl;
-        this._api = baseUrl;
-        this._list = [];
-        this.listEL = document.querySelector(listEL);
-        this.temp = document.querySelector(template).innerHTML;
-        this.listEL.addEventListener("click", (e) => this.onItemClick);
-        this.itemClass = itemClass;
-    }
-
-    onItemClick(e) {
-        // console.log(e.target); // <div class="album-item" data-item-id="5">eaque aut omnis a</div>
-        // console.log(itemClass()); // выводит undefined. Почему?
-        // itemClass (e.target);
-        // const clickedId = e.target.closest(itemClass());
-
-        const clickedId = e.target.dataset.itemId;
-        photoList.setApi(clickedId);
-        photoList.fetchList();
-        
-    }
-
-    itemClass (target) {
-        const clickedId = getItemId(target);
-        photoList.setApi(clickedId);
-        photoList.fetchList();
-    }
-
-    fetchList() {
-        return fetch(this._api).then((res) => res.json())
-        .then ((data) => {
-            this._list = data;
-            this.renderList();
-        })
-    } 
-    
-    getItemId(el) {
-        const itemEl = el.closest('.' + this.itemClass);
-        return itemEl.dataset.itemId;
-    }
-
-    findItem(id) {
-        return albumList.find((obj) => obj.id === id);
-    }
-
-    renderList() {
-        this.listEL.innerHTML = this._list.map((e) => this.generateItemHtml(e)).join('\n');
-    }
-    
-    generateItemHtml (item) {
-    return this.interpol (item)
-    }
-
-    interpol (obj) {
-        let templ = this.temp;
-        for (let key in obj) {
-            templ = templ.replaceAll(`{{${key}}}`, obj[key]);
-        }
-        return templ;
-    }
-    
-    setApi (id) {
-        this._api = this._baseUrl + id;
-    }
-
-
-}
-
-
-
-
-
-let albums = new ItemList (
-    'https://jsonplaceholder.typicode.com/albums/',
-    '#albumList', 
-    '#albumItemTemplate',
-    'album-item', 
-    );
-
-    let photoList = new ItemList (
-        'https://jsonplaceholder.typicode.com/photos?albumId=',
-        '#photoList', 
-        '#photoItemTemplate',
-        'photo-item', 
-        );
+let itemList = [];
 
 
 init();
 
-function init () {
-    albums.fetchList()
-    .then (() => {
-        photoList.setApi(albums._list[0].id);
-        photoList.fetchList();
-    });
+function onAddNewClick () {
+    const obj =  {
+        description: 'new memo',
+    };
+    memoApi.create(obj)
+    .then ((data) =>{
+        itemList.push(data);
+        renderList(itemList, memoListEL, memoTemplate);
+    })
+}
+
+function onDelClick(e) {
+    if (e.target.classList.contains('deleteBtn'))
+        {const id = +getItemId(e);
+        memoApi.delete(id)
+            .then (() => {
+                fetchItemList();
+            })
+    }
+}
+
+function onItemUpdate (e) {
+    const id = getItemId(e);
+    const item = findItem(id)
+    item.description = e.target.value;
+    memoApi.update(item);
+}
+
+function init() {
+    fetchItemList()
+}
+
+function fetchItemList() {
+    memoApi.getList()
+    .then ((data) => {
+        itemList = data;
+        renderList(itemList, memoListEL, memoTemplate);
+    })
+} 
+
+function getItemId(el) {
+    const itemEl = el.target.closest('.'+MEMO_CLASS);
+    return itemEl.dataset.itemId;
+}
+
+function findItem(id) {
+    return itemList.find((obj) => obj.id === id);
+}
+
+function renderList(list, listEL, htmlTempalate) {
+    listEL.innerHTML = list.map((e) => interpolate(htmlTempalate, e)).join('\n');
 }
 
 
 
+
+
+
+
+// class ItemList {
+//     constructor(baseUrl, listEL, template, itemClass) {
+//         this._api = new RespApi(baseUrl);
+//         this._list = [];
+//         this.listEL = document.querySelector(listEL);
+//         this.temp = document.querySelector(template).innerHTML;
+//         this.listEL.addEventListener('click', (e) => this.onDelClick(e));
+//         this.listEL.addEventListener('change', (e) => this.onItemUpdate(e));
+//         this.itemClass = itemClass;
+//         this.newMemoBtnEl = document.querySelector("#newMemoButton");
+//         this.newMemoBtnEl.addEventListener('click', () => this.onAddNewClick());
+//     }
+
+
+//     onDelClick(e) {
+//         console.log (e);
+//                 if (e.target.classlist.contains('.deleteBtn')) {
+//             console.log (e);
+//             // this.onDelBtnClick(e);
+//         }
+        
+//     }
+
+//     onItemUpdate (e) {
+//         console.log ("change");
+//         console.log (e);
+//         const id = this.getItemId(e);
+//         console.log (id);
+//     }
+
+
+//     onAddNewClick () {
+//         const obj =  {
+//             description: 'new memo 3',
+//         };
+//         this._api.create(obj)
+//         .then ((data) =>{
+//             this._list.push(data);
+//             this.renderList();
+//         })
+//     }
+
+//     itemClass (target) {
+//         const clickedId = getItemId(target);
+//         photoList.setApi(clickedId);
+//         photoList.fetchList();
+//     }
+
+//     fetchList() {
+//         return this._api.getList()
+//         .then ((data) => {
+//             this._list = data;
+//             this.renderList();
+//         })
+//     } 
+    
+//     getItemId(el) {
+//         const itemEl = el.closest('.' + this.itemClass);
+//         return itemEl.dataset.itemId;
+//     }
+
+//     findItem(id) {
+//         return itemList.find((obj) => obj.id === id);
+//     }
+
+//     renderList() {
+//         this.listEL.innerHTML = this._list.map((e) => this.generateItemHtml(e)).join('\n');
+//     }
+    
+//     generateItemHtml (item) {
+//     return interpolate (this.temp, item)
+//     }
+
+// }
+
+
+
+
+
+// let memoDesk = new ItemList (
+//     'https://5dd3d5ba8b5e080014dc4bfa.mockapi.io/stickers/',
+//     '#memoList', 
+//     '#memoItemTemplate',
+//     'memo', 
+//     );
+
+
+
+// init();
+
+// function init () {
+//     memoDesk.fetchList()
+// }
