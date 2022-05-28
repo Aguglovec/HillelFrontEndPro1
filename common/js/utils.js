@@ -6,6 +6,9 @@ function interpolate(template, obj) {
     return template;
 }
 
+    //Переписал функцию interpolate, добавил рекурсию, чтобы она перебирала объекты на всю глубину.
+    // Плюс - масштабируемость. Достаточно добавить новые свойства только в шаблон, и не надо переписывать код.
+    // Минус - все свойства должны иметь уникальные имена иначе будет записано первое, которое попадётся.
 function interpolateDeeper(template, obj) {
     for (key in obj) {
 
@@ -41,3 +44,12 @@ function copyObj(object) {
         return newObj;
     }
 }    
+
+
+function debounce(fn, timeout = 500) {
+    let timerId = null;
+    return (...rest) => {
+        clearTimeout(timerId);
+        timerId = setTimeout(() => fn(...rest), timeout);
+    };
+}
