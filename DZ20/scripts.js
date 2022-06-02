@@ -1,5 +1,7 @@
 "use strict";
 
+//Переписал на jQuery, добавил плагин и удалил слой с данными
+
 const ALBUM_SELECTOR = '.album-item';
 const PHOTO_SELECTOR = '.photo-item'
 const PHOTOLIST_ID = 'photoList';
