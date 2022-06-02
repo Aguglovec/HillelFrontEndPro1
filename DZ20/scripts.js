@@ -4,7 +4,7 @@
 
 const ALBUM_SELECTOR = '.album-item';
 const PHOTO_SELECTOR = '.photo-item'
-const PHOTOLIST_ID = 'photoList';
+const PHOTOLIST_ID = '#photoList';
 
 
 const albumsApi = new RespApi('https://jsonplaceholder.typicode.com/albums/');
@@ -52,7 +52,7 @@ function fetchPhotoList() {
     photosApi.getList()
     .then ((data) => {
         renderList(data, $photoListEL, $photoTemplate);
-        lightGallery (document.getElementById(PHOTOLIST_ID), {
+        lightGallery ($(PHOTOLIST_ID)[0], {
             selector: PHOTO_SELECTOR,
             plugins: [lgZoom, lgThumbnail],
             licenseKey: 'ggg',
