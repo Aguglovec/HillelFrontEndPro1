@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="../common/css/normalize.css" />
+    <link rel="stylesheet" href="../common/css/skeleton.css" />
+    <link rel="stylesheet" href="../common/css/dark-theme.css" />
+    <link rel="stylesheet" href="css/lightgallery-bundle.css" />
+    <script src="../common/js/jquery-3.6.0.js" defer></script>
+    
+    <script src="js/lightgallery.umd.js" defer></script>
+    <script src="js/lg-thumbnail.umd.js"></script>
+    <script src="js/lg-zoom.umd.js"></script>
+
+    <script src="../common/js/utils.js" defer></script>
+    <script src="../common/js/RestApi.js" defer></script>
+    <script src="scripts.js" defer></script>
+    <title>20 урок</title>
+</head>
+
+<body>
+
+  <h3>Домашнее задание к 20 уроку Hillel-Front-End-Pro</h3>
+  <div class="big-photo center hidden" id="bigPhoto"></div>
+  <div class="main-container">
+    
+      <div class="sidebar" >
+        <h4>Albums</h4>
+        <div id="albumList"></div>
+      </div>
+
+      <div class="gallery">
+        <h4>Photos</h4>
+        <div class="photoList" id="photoList"></div>
+      </div>
+  </div>
+
+<script type="text/template" id="albumItemTemplate">
+  <div class="album-item" data-item-id="{{id}}">{{title}}</div>
+</script>
+
+<script type="text/template" id="photoItemTemplate">
+<div class="photo-item" data-src="{{url}}">
+  <img src="{{thumbnailUrl}}" src="" data-item-id="{{id}}">
+</div>
+</script>
+
+</body>
+</html>

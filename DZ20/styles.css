@@ -1,0 +1,43 @@
+.main-container {
+    width: 1000px;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    padding: 10px;
+    box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    font-style: normal;
+    font-weight: bold;
+    line-height: 27px;
+    margin: 10px ;
+}
+
+.gallery {
+    width: 70%;
+    /* text-align: center; */
+    /* flex-direction: row;
+    flex-wrap: wrap; */
+}
+
+
+
+.album-item:hover {
+background: rgb(91, 90, 90);
+}
+
+
+.photo-item {
+    display: inline;
+}
+
+/* photoList {
+    flex-direction: row;
+    flex-wrap: wrap;
+} */
+
+
