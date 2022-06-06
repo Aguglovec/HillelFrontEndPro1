@@ -1,0 +1,52 @@
+.result {
+    font-weight: bold;
+}
+
+.error {
+    color: red;
+}
+
+.taskToDo {
+    color: rgb(242, 242, 242);
+    font-weight: bold;
+    font-size: larger;
+}
+
+.taskDone {
+    color: rgb(25, 49, 25);
+    font-weight:100;
+    text-decoration: line-through;
+    font-size: larger;
+}
+
+.title {
+    text-align: center;
+}
+.mainBlock {
+    padding: 2%;
+    background-color: rgb(108, 107, 64);
+    width: 600px;
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    margin: 200px auto;
+    box-shadow: 6px 6px 20px rgba(0, 0, 0, 0.5);
+    transform: translateX(-190px);
+}
+
+body {
+    background-image: url(img/board.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-position: top;
+
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* input {
+    flex-grow: 4; 
+} */
