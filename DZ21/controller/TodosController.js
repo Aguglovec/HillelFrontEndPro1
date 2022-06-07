@@ -31,8 +31,10 @@ class TodosController {
     }
 
     addTodo(newTodo) {
-        console.log (newTodo);
-        // this._todosList.addTodo(newTodo);
-        // this._todosListView.renderList(this._todosList.list);
+        this._todosList.addTodo(newTodo)
+        .then((data) => {
+            this._todosListView.renderOne(data);
+        });
+
     }
 }

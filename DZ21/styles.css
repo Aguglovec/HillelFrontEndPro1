@@ -1,12 +1,8 @@
-.result {
-    font-weight: bold;
-}
-
 .error {
     color: red;
 }
 
-.taskToDo {
+.taskItem {
     color: rgb(242, 242, 242);
     font-weight: bold;
     font-size: larger;
@@ -44,9 +40,10 @@ body {
 
 form {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
-/* input {
+input {
     flex-grow: 4; 
-} */
+}

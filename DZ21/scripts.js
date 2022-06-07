@@ -2,7 +2,7 @@
 
 
 $(() => {
-    new TodosController($('.mainBlock'));
+   const _TodosController = new TodosController($('.mainBlock'));
 });
 
 // const TASK_CLASS = 'taskItem';

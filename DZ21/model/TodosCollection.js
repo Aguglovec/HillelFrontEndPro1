@@ -38,7 +38,7 @@ class TodosCollection {
     }
 
     addTodo(todoItem) {
-        fetch(TODOS_URL, {
+        return fetch(TODOS_URL, {
             method: 'POST',
             body: JSON.stringify(todoItem),
             headers: {
@@ -47,8 +47,8 @@ class TodosCollection {
         })
         .then((res) => res.json())
         .then((data) => {
-            // this.list.pop();
             this.list.push(data);
-        });
+            return data;
+        })
     }
 }

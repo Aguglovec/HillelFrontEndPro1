@@ -44,4 +44,8 @@ class TodosListView {
         this.$el.empty();
         this.$el.append(list.map(TodosListView.createItemElement));
     }
+
+    renderOne (todo) {
+        this.$el.append(TodosListView.createItemElement(todo));
+    }
 }
