@@ -1,6 +1,7 @@
 const {series, parallel, src, dest} = require ('gulp');
 const concat = require ('gulp-concat');
 const uglify = require('gulp-uglify');
+const cleanCSS = require('gulp-clean-css');
 const inject = require('gulp-inject');
 const del = require('del');
 
@@ -16,6 +17,7 @@ function copyCss() {
     './src/styles.css']
     )
     .pipe(concat('app.css'))
+    .pipe(cleanCSS())
     .pipe(dest('./dist/css'))
 }
 
