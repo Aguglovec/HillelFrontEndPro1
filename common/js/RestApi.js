@@ -1,4 +1,4 @@
-class RespApi {
+export default class RespApi {
     constructor(baseUrl) {
         this._baseUrl = baseUrl;
     }

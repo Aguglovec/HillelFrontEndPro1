@@ -1,5 +1,5 @@
-function interpolate(template, obj) {
-    for (key in obj) {
+export default function interpolate(template, obj) {
+    for (let key in obj) {
         template = template.replaceAll(`{{${key}}}`, obj[key]);
     }
 
@@ -10,7 +10,7 @@ function interpolate(template, obj) {
     // Плюс - масштабируемость. Достаточно добавить новые свойства только в шаблон, и не надо переписывать код.
     // Минус - все свойства должны иметь уникальные имена иначе будет записано первое, которое попадётся.
 function interpolateDeeper(template, obj) {
-    for (key in obj) {
+    for (let key in obj) {
 
         if (typeof (obj[key]) !== "object") {
             template = template.replaceAll(`{{${key}}}`, obj[key]);
