@@ -9,7 +9,7 @@ export default function interpolate(template, obj) {
     //Переписал функцию interpolate, добавил рекурсию, чтобы она перебирала объекты на всю глубину.
     // Плюс - масштабируемость. Достаточно добавить новые свойства только в шаблон, и не надо переписывать код.
     // Минус - все свойства должны иметь уникальные имена иначе будет записано первое, которое попадётся.
-function interpolateDeeper(template, obj) {
+export function interpolateDeeper(template, obj) {
     for (let key in obj) {
 
         if (typeof (obj[key]) !== "object") {

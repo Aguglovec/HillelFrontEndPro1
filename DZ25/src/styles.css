@@ -1,0 +1,21 @@
+.error {
+    margin: auto;
+    color: red;
+    font-weight: bold;
+    /* font-size: 200%; */
+    /* text-align: center; */
+
+}
+
+body {
+    text-align: center;
+}
+.mainBlock {
+    display: flex;
+    flex-direction: column;
+}
+
+.box {
+    margin: auto;
+}
+
