@@ -1,6 +1,6 @@
 "use strict";
 
-const $ = require( "jquery" );
+import $ from 'jquery';
 import './styles.css';
 import '../../common/css/normalize.css';
 import '../../common/css/skeleton.css';

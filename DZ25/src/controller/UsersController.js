@@ -1,4 +1,4 @@
-const $ = require( "jquery" );
+import $ from 'jquery';
 import {UsersCollection} from '../model/UsersCollection.js';
 import {UsersFormView} from '../view/UsersFormView.js';
 import {UsersListView} from '../view/UsersListView.js';

@@ -1,4 +1,4 @@
-const $ = require( "jquery" );
+import $ from 'jquery';
 import interpolate from '../../../common/js/utils.js';
 
 export class UsersListView {
