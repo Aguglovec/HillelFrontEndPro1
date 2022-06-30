@@ -16,6 +16,7 @@ export default class TodoRow extends EventEmitter {
     static deleteButtonSelector = '.delete-btn';
     static itemSelector = '.listItem';
     static doneClass = 'taskDone'
+
     constructor(model) {
         super();
 
@@ -34,7 +35,7 @@ export default class TodoRow extends EventEmitter {
             this._model.delete(),
         );
         this.$el.on('click', TodoRow.itemSelector, () =>
-            this.trigger('toggle', this._model),
+            this._model.toggle()
         );
     }
 

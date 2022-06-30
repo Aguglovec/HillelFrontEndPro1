@@ -40,7 +40,6 @@ export default class TodosList extends EventEmitter {
 
     _wrapRow(model) {
         const rowView = new TodoRow(model);
-        rowView.on('toggle', (model) => this.trigger('toggle', model));
 
         return rowView;
     }

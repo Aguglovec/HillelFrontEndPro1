@@ -12,8 +12,6 @@ export default class TodosView {
         this._$listView = new TodosList(collection);
         this.$el.append(this._$listView.$el);
 
-        this._$listView.on('toggle', this.toggleModel);
-
         this._$formView = new TodosForm();
         this.$el.append(this._$formView.$el);
 
@@ -36,7 +34,4 @@ export default class TodosView {
         }
     };
 
-    toggleModel = (model) => {
-        this._collection.toggleTodo(model);
-    };
 }

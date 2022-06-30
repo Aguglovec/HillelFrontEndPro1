@@ -18,13 +18,6 @@ export default class TodosCollection extends EventEmitter {
             });
     }
 
-    toggleTodo(model) {
-        model.isDone = !model.isDone;
-        model.save();
-    }
-
-
-
     createTodo(newTodo) {
         return fetch(this._url, {
             method: 'POST',
@@ -35,8 +28,9 @@ export default class TodosCollection extends EventEmitter {
         })
             .then((res) => res.json())
             .then((data) => {
-                this.list.push(this._wrapModel(data));
-                this.trigger('add', this._wrapModel(data));
+                const model = this._wrapModel(data);
+                this.list.push(model);
+                this.trigger('add', model);
             });
     }
 

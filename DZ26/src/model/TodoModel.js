@@ -37,4 +37,10 @@ export default class TodoModel extends EventEmitter {
     set(data) {
         Object.assign(this, data);
     }
+
+    toggle() {
+        this.isDone = !this.isDone;
+        this.save();
+    }
+
 }
