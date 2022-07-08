@@ -40,3 +40,9 @@
 input {
   margin: 5px;
 }
+
+.error {
+  font-weight: bolder;
+  font-size: 200%;
+  color: red;
+}

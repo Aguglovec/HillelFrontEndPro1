@@ -7,6 +7,7 @@ export default class App extends Component {
         operand1: '',
         operand2: '',
         operation: '+',
+        error: ''
     };
 
     render() {
@@ -38,6 +39,7 @@ export default class App extends Component {
                     onInput={this.onInputChange}
                 />
                 =<strong>{this.result()}</strong>
+                <div class="error">{this.state.error}</div>
             </div>
         );
     }
@@ -51,11 +53,14 @@ export default class App extends Component {
     };
 
     result = () => {
+      this.state.error = '';
+
       const a = +this.state.operand1;
       const b = +this.state.operand2;
 
       if (isNaN(a) === true || isNaN(b) === true) {
-          return 'only 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 are allowed'
+        this.state.error = 'only 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 are allowed';
+        return ''
       }
 
       switch (this.state.operation) {
@@ -63,9 +68,12 @@ export default class App extends Component {
           case '+': return (a + b);
           case '-': return (a - b);
           case '*': return (a * b);
-          case '/': if (b===0) { return `It is forbidden to divide by zero`} else { return (a / b) }
+          case '/': if (b===0) { 
+                      this.state.error = `It is forbidden to divide by zero`;
+                      return ''
+                    } else { return (a / b) }
 
-          default: return 'Something went wrong. Reload the page.'
+          default: this.state.error =  'Something went wrong. Reload the page.'
 
         }
     }
