@@ -66,7 +66,7 @@ export default class App extends Component {
     };
 
     toggleTodo = (id) => {
-        const toggledTodo = this.state.list.find((todo) => todo.id === id);
+        const toggledTodo = {...this.state.list.find((todo) => todo.id === id)};
         toggledTodo.isDone = !toggledTodo.isDone;
         this.updateTodo (toggledTodo);
         // this.setState({
