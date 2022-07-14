@@ -12,7 +12,7 @@ export default class App extends Component {
 
     render() {
         return (
-          
+            
             <div>
             <h3>CALCULATOR</h3>
                 <br />
@@ -38,42 +38,44 @@ export default class App extends Component {
                     value={this.state.operand2}
                     onInput={this.onInputChange}
                 />
-                =<strong>{this.result()}</strong>
-                <div class="error">{this.state.error}</div>
+                =<strong>{this.state.error ? "" : this.result()}</strong>
+                <div className="error">{this.state.error}</div>
             </div>
         );
     }
 
-
     onInputChange = (e) => {
-        this.setState({
-          [e.target.name]: e.target.value,
-        });
-        this.result();
+
+        if (e.target.name !== "operation" && isNaN(+e.target.value) === true) {
+            this.setState({error: 'only 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 are allowed'});
+
+        } else if (e.target.name === "operand2" && +e.target.value === 0 && this.state.operation==="/") { 
+            this.setState({error: `It is forbidden to divide by zero`});
+
+        } else if (e.target.name === "operation" && e.target.value === "/" && this.state.operand2 === "0" ) { 
+            this.setState({error: `It is forbidden to divide by zero`});
+
+        } else {
+            this.setState({
+                [e.target.name]: e.target.value,
+                error: '',
+            });
+        }
+
     };
 
     result = () => {
-      this.state.error = '';
+        const a = +this.state.operand1;
+        const b = +this.state.operand2;
 
-      const a = +this.state.operand1;
-      const b = +this.state.operand2;
+        switch (this.state.operation) {
 
-      if (isNaN(a) === true || isNaN(b) === true) {
-        this.state.error = 'only 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 are allowed';
-        return ''
-      }
+            case '+': return (a + b);
+            case '-': return (a - b);
+            case '*': return (a * b);
+            case '/': return (a / b);
 
-      switch (this.state.operation) {
-
-          case '+': return (a + b);
-          case '-': return (a - b);
-          case '*': return (a * b);
-          case '/': if (b===0) { 
-                      this.state.error = `It is forbidden to divide by zero`;
-                      return ''
-                    } else { return (a / b) }
-
-          default: this.state.error =  'Something went wrong. Reload the page.'
+            default: return 'Something went wrong. Reload the page.'
 
         }
     }
