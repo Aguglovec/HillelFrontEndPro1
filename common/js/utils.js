@@ -1,4 +1,4 @@
-function interpolate(template, obj) {
+export default function interpolate(template, obj) {
     for (let key in obj) {
         template = template.replaceAll(`{{${key}}}`, obj[key]);
     }
