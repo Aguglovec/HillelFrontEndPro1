@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import { createItem, getItemList, removeItem, updateItem } from '../../api';
-
+import  RespApi from '../RestApi/RestApi';
+import { API_URL } from '../../config'
 
 import NewUserForm from '../NewUserForm/NewUserForm';
 import UserList from '../UserList/UserList';
+
+
 
 export default class App extends Component {
     state = {
@@ -16,7 +18,10 @@ export default class App extends Component {
         },
     };
 
+
+
     componentDidMount() {
+        this.api = new RespApi (API_URL);
         this.fetchList();
     }
 
@@ -38,7 +43,7 @@ export default class App extends Component {
     }
 
     fetchList() {
-        return getItemList()
+        return this.api.getList()
             .then((data) => this.setState({ list: data }))
             .catch(() => {
                 this.setState({
@@ -60,7 +65,7 @@ export default class App extends Component {
 
         this.resetUserForm();
 
-        return updateItem(updatedUser).catch(() => {
+        return this.api.update(updatedUser).catch(() => {
             this.setState({
                 error: 'Something went wrong',
                 list: this.state.list.map((item) =>
@@ -86,7 +91,7 @@ export default class App extends Component {
             list: newList,
         });
 
-        return removeItem(id).catch(() => {
+        return this.api.remove(id).catch(() => {
             this.setState({
                 error: 'Something went wrong',
                 list: prevList,
@@ -110,7 +115,7 @@ export default class App extends Component {
         this.setState({
             list: [...this.state.list, newUser],
         });
-        createItem(newUser).then((data) => {
+        this.api.create(newUser).then((data) => {
             console.log(data);
             this.setState({
                 list: [...prevList, data],
