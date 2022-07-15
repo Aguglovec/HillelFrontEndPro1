@@ -4,6 +4,7 @@ import { API_URL } from '../../config'
 
 import NewUserForm from '../NewUserForm/NewUserForm';
 import UserList from '../UserList/UserList';
+import ErrorMsg from '../ErrorMsg/ErrorMsg';
 
 
 
@@ -16,6 +17,7 @@ export default class App extends Component {
             email: '',
             id: 'new',
         },
+        error: '',
     };
 
 
@@ -28,12 +30,13 @@ export default class App extends Component {
     render() {
         return (
             <div className="container">
-                {this.state.error ? this.state.error : null}
+                
                 <UserList
                     list={this.state.list}
-                    onToggle={this.toggleUser}
+                    onEdit={this.editUser}
                     onRemove={this.removeItem}
                 />
+                <ErrorMsg error={this.state.error} />
                 <NewUserForm 
                 onSave={this.saveItem} 
                 user={this.state.user}  
@@ -44,10 +47,10 @@ export default class App extends Component {
 
     fetchList() {
         return this.api.getList()
-            .then((data) => this.setState({ list: data }))
+            .then((data) => this.setState({ list: data, error:'',}))
             .catch(() => {
                 this.setState({
-                    error: 'Something went wrong',
+                    error: 'Unable to get User list. Try later.',
                 });
             });
     }
@@ -65,9 +68,11 @@ export default class App extends Component {
 
         this.resetUserForm();
 
-        return this.api.update(updatedUser).catch(() => {
+        return this.api.update(updatedUser)
+        .then((data) => this.setState({error:'',}))
+        .catch(() => {
             this.setState({
-                error: 'Something went wrong',
+                error: 'Unable to update a user. Try later.',
                 list: this.state.list.map((item) =>
                     item.id === prevUser.id ? prevUser : item,
                 ),
@@ -76,7 +81,7 @@ export default class App extends Component {
         
     }
 
-    toggleUser = (id) => {
+    editUser = (id) => {
         const user = this.state.list.find((item) => item.id === id);
         this.setState({
             user: {...user},
@@ -91,9 +96,11 @@ export default class App extends Component {
             list: newList,
         });
 
-        return this.api.remove(id).catch(() => {
+        return this.api.remove(id)
+        .then((data) => this.setState({error:'',}))
+        .catch(() => {
             this.setState({
-                error: 'Something went wrong',
+                error: 'Unable to remove a user. Try later.',
                 list: prevList,
             });
             });
@@ -119,11 +126,12 @@ export default class App extends Component {
             console.log(data);
             this.setState({
                 list: [...prevList, data],
+                error:'',
             });
         })
         .catch(() => {
             this.setState({
-                error: 'Something went wrong',
+                error: 'Unable to create a user. Try later.',
                 list: prevList,
             });
 

@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
+import ErrorMsg from '../ErrorMsg/ErrorMsg';
 
 export default class NewUserForm extends Component {
     state = {
-        name: '',
-        surname: '',
-        email: '',
+        error: '',
     };
 
 render() {
             return (
-                <> 
+            <> 
+            <ErrorMsg error={this.state.error} />
             <form id="userForm" onSubmit={this.onFormSubmit}>
                 <table className="u-full-width">
                 <tbody>
@@ -49,8 +49,6 @@ render() {
                 </tr></tbody>
                 </table>
             </form>
-            {/* <InputError /> */}
-            {/* <div className="error" id="error"></div> */}
             </>
     
     
@@ -59,9 +57,7 @@ render() {
         }
     
         oninputChange = (e) => {
-            // this.setState({
-            //     [e.target.name]: e.target.value,
-            // });
+            this.setState({error: '',});
             this.props.onInput(e);
         };
     
@@ -70,10 +66,14 @@ render() {
             for (let key in this.props.user) {
 
                 if (!this.isValid(this.props.user[key])) {
+                    this.setState({
+                        error: 'Please enter user\'s  ' + key + '.',
+                    });
                     return null
                 }
             }
             console.log(this.props.user);
+            this.setState({error: '',});
             this.props.onSave(this.props.user);
     
     

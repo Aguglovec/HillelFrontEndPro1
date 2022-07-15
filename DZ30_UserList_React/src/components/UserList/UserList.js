@@ -23,7 +23,7 @@ export default class UserList extends Component {
                     <UserListItem
                         key={item.id}
                         item={item}
-                        onToggle={this.props.onToggle}
+                        onEdit={this.props.onEdit}
                         onRemove={this.props.onRemove}
                     />
                 ))}

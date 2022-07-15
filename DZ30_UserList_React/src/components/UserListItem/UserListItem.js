@@ -20,7 +20,7 @@ export default class UserListItem extends Component {
     }
 
     onEditClick = () => {
-        this.props.onToggle(this.props.item.id);
+        this.props.onEdit(this.props.item.id);
     };
 
     onDeleteItemClick = (e) => {
