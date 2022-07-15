@@ -2,13 +2,18 @@ import React, { Component } from 'react';
 import { createItem, getItemList, removeItem, updateItem } from '../../api';
 
 
-import NewTodoForm from '../NewTodoForm/NewTodoForm';
-import TodoList from '../TodoList/TodoList';
+import NewUserForm from '../NewUserForm/NewUserForm';
+import UserList from '../UserList/UserList';
 
 export default class App extends Component {
     state = {
         list: [],
-        user: {},
+        user: {
+            name: '',
+            surname: '',
+            email: '',
+            id: 'new',
+        },
     };
 
     componentDidMount() {
@@ -19,12 +24,15 @@ export default class App extends Component {
         return (
             <div className="container">
                 {this.state.error ? this.state.error : null}
-                <TodoList
+                <UserList
                     list={this.state.list}
-                    onToggle={this.toggleTodo}
+                    onToggle={this.toggleUser}
                     onRemove={this.removeItem}
                 />
-                <NewTodoForm onSave={this.createItem} user={this.state.user} />
+                <NewUserForm 
+                onSave={this.saveItem} 
+                user={this.state.user}  
+                onInput={this.oninputChange}/>
             </div>
         );
     }
@@ -39,56 +47,101 @@ export default class App extends Component {
             });
     }
 
-    updateItem(updatedTodo) {
-        const prevTodo = this.state.list.find(
-            (item) => item.id === updatedTodo.id,
+    updateItem(updatedUser) {
+        const prevUser = this.state.list.find(
+            (item) => item.id === updatedUser.id,
         );
 
         this.setState({
             list: this.state.list.map((item) =>
-                item.id === updatedTodo.id ? updatedTodo : item,
+                item.id === updatedUser.id ? updatedUser : item,
             ),
         });
 
-        return updateItem(updatedTodo).catch(() => {
+        this.resetUserForm();
+
+        return updateItem(updatedUser).catch(() => {
             this.setState({
                 error: 'Something went wrong',
                 list: this.state.list.map((item) =>
-                    item.id === prevTodo.id ? prevTodo : item,
+                    item.id === prevUser.id ? prevUser : item,
                 ),
             });
         });
+        
     }
 
-    toggleTodo = (id) => {
-        const todo = this.state.list.find((item) => item.id === id);
+    toggleUser = (id) => {
+        const user = this.state.list.find((item) => item.id === id);
         this.setState({
-            user: {todo},
+            user: {...user},
             })
-
-        // this.updateItem({ ...todo, isDone: !todo.isDone });
     };
 
     removeItem = (id) => {
+        const prevList = [...this.state.list];
         const newList = this.state.list.filter((item) => item.id !== id);
 
         this.setState({
             list: newList,
         });
 
-        return removeItem(id);
+        return removeItem(id).catch(() => {
+            this.setState({
+                error: 'Something went wrong',
+                list: prevList,
+            });
+            });
     };
 
-    createItem = (newTodo) => {
-        newTodo = {
-            ...newTodo,
-            isDone: false,
-        };
 
-        createItem(newTodo).then((data) => {
+    saveItem = (newUser) => {
+        newUser = {...this.state.user};
+
+        if (isNaN(newUser.id)) {
+            this.createItem(newUser);
+        } else {
+            this.updateItem(newUser);
+        }
+    }
+
+    createItem(newUser) {
+        const prevList = [...this.state.list];
+        this.setState({
+            list: [...this.state.list, newUser],
+        });
+        createItem(newUser).then((data) => {
+            console.log(data);
             this.setState({
-                list: [...this.state.list, data],
+                list: [...prevList, data],
             });
+        })
+        .catch(() => {
+            this.setState({
+                error: 'Something went wrong',
+                list: prevList,
+            });
+
+        });
+        
+        this.resetUserForm();
+    };
+
+    resetUserForm() {
+        this.setState({
+            user: {
+                name: '',
+                surname: '',
+                email: '',
+                id: 'new',
+            },
+        });
+    }
+
+    oninputChange = (e) => {
+        this.setState({
+            user:{...this.state.user, [e.target.name]: e.target.value,}
         });
     };
+
 }

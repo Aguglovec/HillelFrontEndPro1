@@ -1,10 +1,10 @@
-import './TodoList.css';
+import './UserList.css';
 
 import React, { Component } from 'react';
 
-import TodoListItem from '../TodoListItem/TodoListItem';
+import UserListItem from '../UserListItem/UserListItem';
 
-export default class TodoList extends Component {
+export default class UserList extends Component {
     render() {
         return (
         <> 
@@ -20,7 +20,7 @@ export default class TodoList extends Component {
             </thead>
             <tbody id="userList" className="task-list ">
             {this.props.list.map((item) => (
-                    <TodoListItem
+                    <UserListItem
                         key={item.id}
                         item={item}
                         onToggle={this.props.onToggle}

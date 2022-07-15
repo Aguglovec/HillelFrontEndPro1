@@ -1,8 +1,8 @@
-import './TodoListItem.css';
+import './UserListItem.css';
 
 import React, { Component } from 'react';
 
-export default class TodoListItem extends Component {
+export default class UserListItem extends Component {
     render() {
         return (
 
@@ -11,7 +11,7 @@ export default class TodoListItem extends Component {
                 <td className="userSurname">{this.props.item.surname}</td>
                 <td className="userEmail">{this.props.item.email}</td>
                 <td className="userAction">
-                    <button type="button" className="user-edit edit-btn" onClick={this.onItemClick}>Edit</button>
+                    <button type="button" className="user-edit edit-btn" onClick={this.onEditClick}>Edit</button>
                     <button type="button" className="delete-btn" onClick={this.onDeleteItemClick}>X</button>
                 </td>
             </tr>
@@ -19,7 +19,7 @@ export default class TodoListItem extends Component {
         );
     }
 
-    onItemClick = () => {
+    onEditClick = () => {
         this.props.onToggle(this.props.item.id);
     };
 
