@@ -1,0 +1,15 @@
+.taskDone {
+    color: lightgreen;
+    font-weight:100;
+    text-decoration: line-through;
+    font-size: larger;
+  }
+  
+.delete-btn {
+    float: right;
+    color: red;
+  }
+
+  .task-item:hover {
+    background-color: rgba(0, 0, 0, 0.338);
+  }
