@@ -1,36 +1,8 @@
 import { CREATE_TODO_ACTION_TYPE, DELETE_TODO_ACTION_TYPE, TODOS_SET_LIST, TOGGLE_TODO_ACTION_TYPE } from '../actions/todoActions';
 
 const INITIAL_VALUE = {
-    list: [
-        {
-            id: 1,
-            title: 'Make a To Do list',
-            isDone: true,
-        },
-        {
-            id: 2,
-            title: 'Check off the first thing on the To Do List',
-            isDone: true,
-        },
-        {
-            id: 3,
-            title: 'Realise you have already completed 2 things on the list',
-            isDone: true,
-        },
-        {
-            id: 4,
-            title: 'Reward yourself with a nap',
-            isDone: false,
-        },
-    ],
+    list: [],
 };
-
-// function constructTodo(payload) {
-//     return {    ...payload, 
-//         id: Date.now(),
-//         isDone: false,
-//     }
-// }
 
 function toggleTodo(todo) {
     return {...todo, isDone: !todo.isDone}
