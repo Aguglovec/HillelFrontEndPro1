@@ -20,7 +20,6 @@ export function updateTodo(payload) {
 
 export const TODOS_SET_LIST = 'TODOS_SET_LIST';
 export function  setTodoList (payload) {
-    console.log('toggle ' + payload);
     return { type: TODOS_SET_LIST, payload };
 }
 
