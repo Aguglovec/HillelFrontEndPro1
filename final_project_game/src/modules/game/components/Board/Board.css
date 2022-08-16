@@ -2,13 +2,13 @@
     width: 400px;
     height: 400px;
     margin: auto;
-    background-color: #3a593d;
+    /* background-color: #3a593d; */
     display: flex;
     flex-direction: row ;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     align-content: center;
-    box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.3);
+    /* box-shadow: 6px 6px 10px rgba(0, 0, 0, 0.3); */
     border-radius: 10px;
 }
