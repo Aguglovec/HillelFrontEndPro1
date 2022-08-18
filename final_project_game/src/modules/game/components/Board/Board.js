@@ -7,7 +7,6 @@ import "./Board.css"
 function Board() {
     const list = useSelector(listSelector);
 
-
     return (
         <div className="board" >
             {(list.map((item) => <TileItem key={item.id} tile={item} />))}

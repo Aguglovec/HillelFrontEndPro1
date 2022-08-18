@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { difficultySelector, highscoreSelector, isWinSelector } from '../../../selectors/selectors';
 import { fetchList } from '../../../store/actions/game25Actions';
@@ -20,10 +20,9 @@ function HighscoreComponent() {
 
   return (
     <>
-    { (win) ? <Win diff = {diff} highscoreList = {highscoreList} /> : ""}
+    { (win) ? <Win /> : ""}
     <HighscoreHeader  />
     <UserList list={highscoreList} />
-    {/* <UserList list={highscoreList.filter((item) => (item.difficulty === diff))} /> */}
     </>
   )
 }

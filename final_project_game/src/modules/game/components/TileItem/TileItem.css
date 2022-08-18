@@ -19,19 +19,20 @@
 
 .hidden {
     font-size: 0;
-    background-color: #f3f5c6;
-}
+    background-color: rgba(141, 177, 141, 0.589); 
+  }
 
 .wrong,
 .wrong:hover {
   background-color: indianred;
 }
 
-.done {
+.done,
+.done:hover {
   background-color: rgba(141, 177, 141, 0.152); 
   color: #00000028;
 }
 
-.done:hover {
+/* .done:hover {
   background-color: rgba(141, 177, 141, 0.366); 
-}
+} */

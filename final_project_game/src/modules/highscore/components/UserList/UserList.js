@@ -1,5 +1,3 @@
-import './UserList.css';
-
 import React, { Component } from 'react';
 
 import UserListItem from '../UserListItem/UserListItem';
@@ -8,7 +6,7 @@ export default class UserList extends Component {
     render() {
         return (
         <> 
-            <table className="">
+            <table>
             <thead>
                 <tr>
                 <th>#</th>

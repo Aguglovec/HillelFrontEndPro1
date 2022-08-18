@@ -1,4 +1,4 @@
-.task-item {
+.list-item {
     color: rgb(213, 210, 210);
 
     cursor: pointer;
@@ -8,10 +8,3 @@
 
 }
 
-.task-item.done {
-    background-color: lightgreen;
-}
-
-.task-item .delete-btn {
-    float: right;
-}

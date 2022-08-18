@@ -1,12 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { startTimeSelector } from '../../../../selectors/selectors';
-import { setEndTime, setStartTime } from '../../../../store/actions/game25Actions';
 import { timeMsToMin } from '../../../utils/utils';
 
 function Timer() {
 const start = useMemo(() => Date.now(), []);
-const [time, setTime] = useState(Date.now());
+const [time, setTime] = useState(0);
 
 
 useEffect(() => {
@@ -15,10 +12,10 @@ useEffect(() => {
     return () => {
         clearInterval(timer);
     }
-}, [])
+}, [start])
 
     return (
-    <div>Time passed: {timeMsToMin(time)} </div>
+    <h5>Time passed: {(time) ? timeMsToMin(time) : "0 sec"}</h5>
     )
 }
 

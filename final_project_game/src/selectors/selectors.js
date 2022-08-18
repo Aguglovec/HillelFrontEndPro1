@@ -14,6 +14,10 @@ export function isWinSelector(state) {
     return state.win;
 }
 
+export function isStartSelector(state) {
+    return state.start;
+}
+
 export function highscoreSelector(state) {
     return state.highscoreList;
 }

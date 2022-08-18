@@ -1,21 +1,47 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
-import { resetWinState } from '../../../../store/actions/game25Actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { difficultySelector, highscoreSelector } from '../../../../selectors/selectors';
+import { resetWinState, submitHighscore } from '../../../../store/actions/game25Actions';
+import ErrorMsg from '../../components/ErrorMsg/ErrorMsg';
+import useUserTime from '../../hooks/useUserTime';
 
 function HighscoreForm() {
+    const [userName, setUserName] = useState("")
+    const [error, setError] = useState('');
+    const time = useUserTime();
+    const highscoreList = useSelector(highscoreSelector);
+    const diff = useSelector(difficultySelector);
+
+
     const dispatch = useDispatch();
-    const [name, setName] = useState("")
+
+    function oninputChange (e) {
+        setError('');
+        setUserName(e.target.value);
+    }
 
     function onHighscoreSubmit(e) {
         e.preventDefault();
+        if (!isValid(userName)) {
+            setError('Please enter your name.');
+            return null
+        };
+        const highscore = {userName,time};
+        setError('');
+        dispatch(submitHighscore(diff, highscore, highscoreList));
+        resetForm();
         dispatch(resetWinState());
-        console.log(name);
     }
-    
+
+    function resetForm() {
+        setUserName("");
+    }
+
 return (
     <>
+    <ErrorMsg error={error} />
     <form onClick={(e) => e.stopPropagation()} onSubmit={onHighscoreSubmit}>
-    <input type="text" placeholder="Enter your name" value={name} onChange={(e) => setName(e.target.value)} />
+    <input type="text" placeholder="Enter your name" value={userName} onChange={(e) => oninputChange(e)} />
     <button>Submit</button>
     </form>
     </>
@@ -23,3 +49,11 @@ return (
 }
 
 export default HighscoreForm
+
+
+function isValid (string) {
+    if (string.length < 1) {
+        return false;
+    } 
+    return true;
+}

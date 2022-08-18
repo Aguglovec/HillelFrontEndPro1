@@ -1,3 +1,8 @@
+import './css/normalize.css';
+import './css/skeleton.css';
+import './css/dark-theme.css';
+import './css/index.css';
+
 import AppRoutes from './modules/app/components/AppRoutes';
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';

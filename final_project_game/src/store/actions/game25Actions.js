@@ -1,20 +1,13 @@
-// import { getList, create, update, remove } from "../../components/RestApi/RestApi";
-// import React from "react";
-// import { useSelector } from "react-redux";
-// import { maxTileSelector, searchingForSelector } from "../../selectors/selectors";
-
-import getHighscores from "../../modules/highscore/services/highscoreServices";
-import { getList } from "../../modules/RestApi/RestApi";
-
+import { getHighscores, putHighscore } from "../../modules/highscore/services/highscoreServices";
 
 export const RESET_STATE = 'RESET_STATE';
 export function  resetGameState (payload) {
     return { type: RESET_STATE, payload };
 }
 
-export const TILES_SET_LIST = 'TILES_SET_LIST';
+export const SET_TILES_LIST = 'SET_TILES_LIST';
 export function  setTilesList (payload) {
-    return { type: TILES_SET_LIST, payload };
+    return { type: SET_TILES_LIST, payload };
 }
 
 export const SET_DIFFICULTY = 'SET_DIFFICULTY';
@@ -32,9 +25,14 @@ export function  setEndTime (payload) {
     return { type: SET_END_TIME, payload };
 }
 
-export const WIN_SEQUENCE = 'WIN_SEQUENCE';
+export const SET_START = 'SET_START';
+export function  setStart (payload) {
+    return { type: SET_START, payload };
+}
+
+export const SET_WIN = 'SET_WIN';
 export function  winSequence (payload) {
-    return { type: WIN_SEQUENCE, payload };
+    return { type: SET_WIN, payload };
 }
 
 export const RESET_WIN = 'RESET_WIN';
@@ -47,13 +45,13 @@ export function  clickOnTile (payload) {
     return { type: TILE_CLICKED, payload };
 }
 
-export const UPDATE_TILE = 'UPDATE_TILE';
-export function  updateTile (payload) {
-    return { type: UPDATE_TILE, payload };
+export const RESET_TILE_ERROR = 'RESET_TILE_ERROR';
+export function  resetErrorState (payload) {
+    return { type: RESET_TILE_ERROR, payload };
 }
 
 export const HIGHSCORE_SET_LIST = 'HIGHSCORE_SET_LIST';
-export function  setTodoList (payload) {
+export function  setHighscoreList (payload) {
     return { type: HIGHSCORE_SET_LIST, payload };
 }
 
@@ -77,20 +75,37 @@ function randomArr (max) {
     return tilesArr
 }
 
-// export const setDifficulty = (dif) => (dispatch) => {
-//     dispatch(setDif(dif));
-// }
-
-
-
-export const resetErrorState = (tile) => (dispatch) => {
-const tileReset = {...tile, error:false}
-    dispatch(updateTile(tileReset));
-}
 
 export const fetchList = (diff) => (dispatch) => {
     getHighscores(diff)
-        .then((data) => dispatch(setTodoList(data)))
+        .then((data) => dispatch(setHighscoreList(data)))
+        .catch(() => {
+            throw new Error("Something went wrong during highscore fetch.")
+        })
 };
 
+export const submitHighscore = (diff, highscore, highscoreList) => (dispatch) => {
+    const newHighscoreList = highscoreList.map((user) => {
+        if (highscore.time > user.time) {
+            return user
+        } else {
+            const newUser = {...user, ...highscore};
+            highscore = {userName:user.userName, time:user.time};
+            return newUser
+        }
+        })
+    
+    dispatch(setHighscoreList(newHighscoreList));
+
+    function f(i = 0) {
+        if (i < newHighscoreList.length ){
+        putHighscore(diff, newHighscoreList[i])
+        .then(() => {f(++i)})
+        .catch(() => {
+            dispatch(setHighscoreList(highscoreList));
+            throw new Error("Something went wrong during highscore submit.")
+        })  }
+    }
+    f(); 
+};
 

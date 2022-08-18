@@ -1,15 +1,16 @@
 import './HighscoreHeader.css'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { difficultySelector, highscoreSelector } from '../../../../selectors/selectors';
+import { difficultySelector } from '../../../../selectors/selectors';
 import { setDifficulty } from '../../../../store/actions/game25Actions';
+import { DIFF_EASY, DIFF_HARD, DIFF_REGULAR } from '../../../../config';
 
 
 function HighscoreHeader() {
     const dispatch = useDispatch();
     const difficulty = useSelector(difficultySelector);
-    const difs = ["easy", "regular", "hard"];
+    const difs = [DIFF_EASY, DIFF_REGULAR, DIFF_HARD];
 
     function onDifClick(e) {
         dispatch(setDifficulty(e.target.id));
@@ -25,7 +26,7 @@ function HighscoreHeader() {
 
     return (
         <>
-        <div className="container wide">
+        <div className="container">
         <h1>Highscores:</h1>
         {difs.map((item) => (<span className={tileClasses(item)} onClick={onDifClick} key={item} id={item}>{item.toUpperCase()}</span>))}
         </div>

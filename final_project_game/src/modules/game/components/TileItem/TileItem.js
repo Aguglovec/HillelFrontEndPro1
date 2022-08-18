@@ -7,7 +7,6 @@ function TileItem({tile}) {
     const dispatch = useDispatch ();
 
     function onTileClick () {
-        console.log("tile clicked: " + tile.id);
         dispatch(clickOnTile(tile));
     }
 
@@ -15,12 +14,13 @@ function TileItem({tile}) {
         if (tile.error) {
             setTimeout(()=> dispatch(resetErrorState(tile)), 300);
         }
-
-    }, [tile])
+    }, [dispatch, tile])
     
 
     function tileClasses (tile) {
-        // console.log(tile);
+        if (tile.hidden) {
+            return "tile hidden"
+        }
         if (tile.error) {
             return "tile wrong"
         }

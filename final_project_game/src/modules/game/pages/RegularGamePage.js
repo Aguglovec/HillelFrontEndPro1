@@ -1,9 +1,16 @@
 import React from 'react'
-import Game from '../components/Game'
+import { DIFF_REGULAR } from '../../../config'
+import Footer from '../../Footer/Footer'
+import Header from '../../Header/Header'
+import Game from '../components/Game/Game'
 
 function RegularGamePage() {
   return (
-    <Game difficulty="regular" />  )
+    <>
+    <Header />
+    <Game difficulty={DIFF_REGULAR} />  
+    <Footer />
+    </>    )
 }
 
 export default RegularGamePage
