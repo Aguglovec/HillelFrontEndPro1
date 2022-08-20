@@ -6,7 +6,7 @@ import GamePage from '../../game/pages/GamePage';
 import HighscorePage from '../../highscore/pages/HighscorePage';
 import MenuPage from '../../menu/pages/MenuPage';
 import { DIFF_EASY, DIFF_REGULAR, DIFF_HARD } from '../../../config';
-import Description from '../../description/Description';
+import Description from '../../description/components/Description';
 
 
 

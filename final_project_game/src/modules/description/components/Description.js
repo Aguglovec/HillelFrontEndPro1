@@ -1,7 +1,7 @@
 import "./Description.css"
 
 import React from 'react'
-import Footer from '../common/components/Footer/Footer'
+import Footer from '../../common/components/Footer/Footer'
 
 function Description() {
     return (
