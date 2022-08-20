@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import {listSelector} from '../../../../selectors/selectors';
+import {listSelector} from '../../../../store/selectors/selectors';
 import TileItem from '../TileItem/TileItem'
 import "./Board.css"
 

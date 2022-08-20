@@ -6,7 +6,7 @@ import { resetWinState } from '../../../../store/actions/game25Actions';
 import { timeMsToMin } from '../../../utils/utils';
 import HighscoreForm from "../HighscoreForm/HighscoreForm";
 import useUserTime from "../../hooks/useUserTime";
-import { highscoreSelector } from "../../../../selectors/selectors";
+import { highscoreSelector } from "../../../../store/selectors/selectors";
 
 function Win() {
     const dispatch = useDispatch();

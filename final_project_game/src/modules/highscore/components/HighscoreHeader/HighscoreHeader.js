@@ -2,7 +2,7 @@ import './HighscoreHeader.css'
 
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { difficultySelector } from '../../../../selectors/selectors';
+import { difficultySelector } from '../../../../store/selectors/selectors';
 import { setDifficulty } from '../../../../store/actions/game25Actions';
 import { DIFF_EASY, DIFF_HARD, DIFF_REGULAR } from '../../../../config';
 

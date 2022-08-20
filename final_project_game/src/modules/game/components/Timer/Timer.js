@@ -1,8 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { timeMsToMin } from '../../../utils/utils';
 
 function Timer() {
-const start = useMemo(() => Date.now(), []);
+const [start,] = useState(Date.now());
 const [time, setTime] = useState(0);
 
 

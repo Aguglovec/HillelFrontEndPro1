@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { difficultySelector, highscoreSelector, isWinSelector } from '../../../selectors/selectors';
+import { difficultySelector, highscoreSelector, isWinSelector } from '../../../store/selectors/selectors';
 import { fetchList } from '../../../store/actions/game25Actions';
 import HighscoreHeader from './HighscoreHeader/HighscoreHeader';
 import UserList from './UserList/UserList';

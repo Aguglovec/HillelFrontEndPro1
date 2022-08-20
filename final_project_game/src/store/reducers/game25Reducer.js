@@ -1,5 +1,5 @@
 import { DIFF_EASY, DIFF_HARD, DIFF_REGULAR } from '../../config';
-import { SET_TILES_LIST, TILE_CLICKED, SET_WIN, SET_DIFFICULTY, HIGHSCORE_SET_LIST, RESET_STATE, SET_START_TIME, SET_END_TIME, RESET_WIN, SET_START, RESET_TILE_ERROR } from '../actions/game25Actions';
+import { SET_TILES_LIST, TILE_CLICKED, SET_WIN, SET_DIFFICULTY, HIGHSCORE_SET_LIST, RESET_STATE, SET_START_TIME, SET_END_TIME, RESET_WIN, SET_START, RESET_TILE_ERROR, GAME_START } from '../actions/game25Actions';
 
 const INITIAL_VALUE = {
     list: [],
@@ -13,6 +13,12 @@ const INITIAL_VALUE = {
     endTime: null
 
 };
+
+function init (payload) {
+
+
+    
+}
 
 function resetErrorState(state, payload) {
     if (state.difficulty === DIFF_EASY) {
@@ -52,7 +58,7 @@ function whenTileClicked(state, tile) {
     }
 }
 
-function hideTiles(state) {
+function hideAllTiles(state) {
     if (state.difficulty === DIFF_EASY) {
             return state.list
     } else {
@@ -65,6 +71,8 @@ export default function game25Reducer(state = INITIAL_VALUE, { type, payload },)
     switch (type) {
         case RESET_STATE:
             return { ...INITIAL_VALUE};        
+        case GAME_START:
+            return  init(payload);
         case SET_TILES_LIST:
             return { ...state, list: payload };        
         case SET_DIFFICULTY:
@@ -74,11 +82,11 @@ export default function game25Reducer(state = INITIAL_VALUE, { type, payload },)
         case SET_END_TIME:
             return { ...state, endTime: payload };        
         case TILE_CLICKED:
-            return  whenTileClicked(state, payload)
+            return  whenTileClicked(state, payload);
         case RESET_TILE_ERROR:
             return resetErrorState(state, payload);
         case SET_START:
-            return { ...state, start:true, list:hideTiles(state)};
+            return { ...state, start:true, startTime: Date.now() , list:hideAllTiles(state)};
         case SET_WIN:
             return { ...state, win:true, start:false};
         case RESET_WIN:

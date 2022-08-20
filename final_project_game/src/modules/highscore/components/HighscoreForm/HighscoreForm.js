@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { difficultySelector, highscoreSelector } from '../../../../selectors/selectors';
+import { difficultySelector, highscoreSelector } from '../../../../store/selectors/selectors';
 import { resetWinState, submitHighscore } from '../../../../store/actions/game25Actions';
-import ErrorMsg from '../../components/ErrorMsg/ErrorMsg';
+import ErrorMsg from '../../../common/components/ErrorMsg/ErrorMsg';
 import useUserTime from '../../hooks/useUserTime';
 
 function HighscoreForm() {
